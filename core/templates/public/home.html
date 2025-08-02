@@ -1,9 +1,142 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
+    <meta charset="UTF-8">
     <title>Página Home Pública</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+            --gris-claro: #d9d9d6;
+            --verde-oscuro: #364d47;
+            --negro: #1c1414;
+            --blanco: #fff;
+        }
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: var(--blanco);
+        }
+        /* Header */
+        .header {
+            background: var(--negro);
+            color: var(--blanco);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+            height: 60px;
+        }
+        .logo {
+            font-family: 'Georgia', serif;
+            font-size: 2rem;
+            letter-spacing: 2px;
+        }
+        .nav {
+            display: flex;
+            gap: 2rem;
+        }
+        .nav a {
+            color: var(--blanco);
+            text-decoration: none;
+            letter-spacing: 1px;
+            font-size: 1rem;
+            transition: color 0.2s;
+        }
+        .nav a:hover {
+            color: var(--gris-claro);
+        }
+        /* Hero Section */
+        .hero {
+            display: flex;
+            flex-wrap: wrap;
+            min-height: 240px;
+        }
+        .hero-text {
+            background: var(--gris-claro);
+            flex: 1 1 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 200px;
+            min-height: 220px;
+        }
+        .hero-text h1 {
+            font-family: 'Georgia', serif;
+            font-size: 2.5rem;
+            color: var(--verde-oscuro);
+            margin: 0;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+        .hero-img {
+            flex: 1 1 220px;
+            background: var(--gris-claro);
+            min-width: 200px;
+            min-height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .hero-img img {
+            max-width: 100%;
+            max-height: 220px;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+
+        /* Grid Section */
+        .color-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 160px 160px;
+            width: 100%;
+        }
+        .grid-cell {
+            width: 100%;
+            height: 100%;
+        }
+        .gris { background: var(--gris-claro); }
+        .verde { background: var(--verde-oscuro); }
+
+        /* Footer */
+        .footer {
+            height: 60px;
+            background: var(--negro);
+        }
+
+        @media (max-width: 700px) {
+            .hero { flex-direction: column; }
+            .hero-img img { max-height: 180px; }
+            .color-grid { grid-template-rows: 100px 100px; }
+        }
+    </style>
 </head>
 <body>
-    <h1>¡Home pública cargada correctamente!</h1>
+    <div class="header">
+        <div class="logo">DIMSOR</div>
+        <nav class="nav">
+            <a href="#">NOSOTROS</a>
+            <a href="#">CONTACTANOS</a>
+        </nav>
+    </div>
+
+    <div class="hero">
+        <div class="hero-text">
+            <h1>ROBOT<br>AMIGO</h1>
+        </div>
+        <div class="hero-img">
+            <img src="https://i.imgur.com/56Trd2o.jpg" alt="Robot Amigo">
+            <!-- Cambia el src de la imagen por la tuya o usa una URL local de tu proyecto -->
+        </div>
+    </div>
+
+    <div class="color-grid">
+        <div class="grid-cell gris"></div>
+        <div class="grid-cell verde"></div>
+        <div class="grid-cell verde"></div>
+        <div class="grid-cell gris"></div>
+    </div>
+
+    <div class="footer"></div>
 </body>
 </html>
