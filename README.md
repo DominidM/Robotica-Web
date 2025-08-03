@@ -61,9 +61,10 @@ requirements.txt
 
 ## Repositorios relacionados
 
-- [Robotica](https://github.com/DominidM/Robotica)
-- [Robotica-Mobile](https://github.com/DominidM/Robotica-Mobile)
+- [Robotica (firmware principal)](https://github.com/DominidM/Robotica)
+- [Robotica-Mobile (interfaz movil)](https://github.com/DominidM/Robotica-Mobile)
 
+  
 
 ## Licencia
 
