@@ -10,6 +10,13 @@ Este proyecto es una aplicación web desarrollada con Django enfocada en la gest
 - Soporte para migración de base de datos (SQLite para desarrollo, MySQL recomendado para producción)
 - Estilos modernos y personalizables
 
+
+## Repositorios relacionados
+
+- [Robotica (firmware principal)](https://github.com/DominidM/Robotica)
+- [Robotica-Mobile (interfaz movil)](https://github.com/DominidM/Robotica-Mobile)
+
+
 ## Instalación
 
 1. Clona el repositorio:
@@ -59,10 +66,6 @@ requirements.txt
 
 - El home (`home.html`) es fácilmente editable, puedes mejorarlo con tu propio diseño o basarte en tu prototipo de Figma.
 
-## Repositorios relacionados
-
-- [Robotica (firmware principal)](https://github.com/DominidM/Robotica)
-- [Robotica-Mobile (interfaz movil)](https://github.com/DominidM/Robotica-Mobile)
 
   
 
