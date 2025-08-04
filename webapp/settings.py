@@ -62,8 +62,16 @@ WSGI_APPLICATION = 'webapp.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'dimsor',             # Nombre de tu base de datos MySQL
+        'USER': 'root',         # Usuario de la base de datos
+        'PASSWORD': 'dominid',  # Contraseña del usuario
+        'HOST': 'localhost',          # O la IP/hostname de tu servidor MySQL
+        'PORT': '3306',               # Puerto, usualmente 3306 para MySQL
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+            # 'charset': 'utf8mb4',   # Puedes descomentar si quieres soporte Unicode completo
+        }
     }
 }
 
