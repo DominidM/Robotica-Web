@@ -1,10 +1,10 @@
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import RedirectView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('core.urls')),  # Home
-    path('sesiones/', include('modules.public.sesiones.routes.urls')),
-    path('public/', include('modules.public.urls')),  # Todo lo de /public/
-    path('adminroutes/', include('modules.adminroutes.urls')),  # Todo lo de /adminroutes/
+    path('public/', include('modules.routes.public.urls')),
+    path('adminpanel/', include('modules.routes.adminpanel.urls')),
+    path('', RedirectView.as_view(url='/public/home', permanent=False)),  # <--- Esta línea
+    # path('admin/', admin.site.urls),  # deja esto si quieres el admin nativo, si no, quítalo
 ]

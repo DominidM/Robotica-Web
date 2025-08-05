@@ -1,0 +1,70 @@
+{% extends "admin/dashboard_home.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
+        <h2 style="font-weight:600;">Gestión de Emparejamientos</h2>
+        <a class="btn btn-success btn-new" href="#" style="background:#53b075;color:#fff;padding:8px 22px;border-radius:4px;text-decoration:none;font-size:16px;">+ Nuevo</a>
+    </div>
+    <div class="top-toolbar" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;">
+        <div class="search-group" style="display:flex;align-items:center;gap:6px;">
+            <input type="text" class="form-control" placeholder="Buscar por usuario, robot, estado..." style="padding:8px 12px;border:1px solid #c5c5c5;border-radius:4px;font-size:15px;">
+            <button class="btn" style="background:#1976d2;color:white;border:none;padding:8px 14px;border-radius:4px;cursor:pointer;"><i class="fa fa-search"></i></button>
+        </div>
+        <div class="dropdown" style="margin-left:10px;">
+            <select class="form-select" style="padding:8px 12px;border-radius:4px;font-size:15px;">
+                <option>Mostrar: 10</option>
+                <option>20</option>
+                <option>50</option>
+            </select>
+        </div>
+    </div>
+    <table class="table table-striped table-bordered" style="width:100%;background:#fff;">
+        <thead>
+            <tr>
+                <th style="width:60px;">ID</th>
+                <th>Usuario</th>
+                <th>Robot</th>
+                <th>Inicio</th>
+                <th>Fin</th>
+                <th>Estado</th>
+                <th style="width:110px;">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for emp in emparejamientos %}
+            <tr>
+                <td>{{ emp.id }}</td>
+                <td>{{ emp.usuario_nombre }}</td>
+                <td>{{ emp.robot_nombre }}</td>
+                <td>{{ emp.fecha_inicio|date:"Y-m-d H:i" }}</td>
+                <td>
+                    {% if emp.fecha_fin %}
+                        {{ emp.fecha_fin|date:"Y-m-d H:i" }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td>{{ emp.estado }}</td>
+                <td class="actions-cell" style="text-align:center;">
+                    <a href="#" class="btn btn-sm btn-primary" title="Editar" style="color:#1976d2;"><i class="fa fa-edit"></i></a>
+                    <a href="#" class="btn btn-sm btn-danger" title="Eliminar" style="color:#d23c3c;"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7" class="text-center">No hay emparejamientos registrados.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="pagination" style="display:flex;justify-content:center;align-items:center;margin-top:8px;gap:4px;">
+        <button disabled>&lt;</button>
+        <span class="active">1</span>
+        <button>&gt;</button>
+    </div>
+    <div class="table-footer" style="font-size:12px;color:#888;text-align:right;margin-top:4px;">
+        Mostrando 1-10 de X emparejamientos. Página 1 de Y.
+    </div>
+</div>
+{% endblock %}

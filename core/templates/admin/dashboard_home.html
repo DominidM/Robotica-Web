@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Administración | DIMSOR</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Puedes reemplazar por tu propio CSS o usar Bootstrap si lo deseas -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+    <style>
+        body {
+            background: #222724;
+            margin: 0;
+            font-family: 'Montserrat', Arial, sans-serif;
+        }
+        .header-bar {
+            background: #2d2326;
+            height: 48px;
+            color: #aaa;
+            padding-left: 40px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+        .sidebar {
+            width: 240px;
+            background: #192721;
+            color: #fff;
+            min-height: 100vh;
+            float: left;
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar .logo-bar {
+            background: #2d2326;
+            padding: 8px 0 8px 32px;
+            font-size: 32px;
+            letter-spacing: 2px;
+            color: #fff;
+            font-family: 'Georgia', serif;
+        }
+        .sidebar .side-img {
+            width: 180px;
+            height: 110px;
+            margin: 24px auto 16px auto;
+            border-radius: 6px;
+            background: #222;
+            object-fit: cover;
+            display: block;
+        }
+        .sidebar nav {
+            flex: 1;
+            margin-left: 32px;
+        }
+        .sidebar nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            display: block;
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+            position: relative;
+            padding-left: 10px;
+            transition: color 0.2s;
+        }
+        .sidebar nav a.active,
+        .sidebar nav a:hover {
+            color: #b9e2ac;
+        }
+        .sidebar nav .active-marker {
+            position: absolute;
+            left: -12px;
+            color: #b9e2ac;
+        }
+        .main-container {
+            margin-left: 240px;
+            padding: 0;
+            background: transparent;
+            min-height: 100vh;
+        }
+        .page-bar {
+            background: #406356;
+            padding: 12px 0 12px 0;
+            margin: 0 0 30px 0;
+        }
+        .content-panel {
+            background: #f5f6fa;
+            margin: 32px 48px;
+            border-radius: 8px;
+            box-shadow: 0 4px 16px 0 #0002;
+            padding: 30px 30px 40px 30px;
+            min-height: 400px;
+        }
+        /* Estilos para el buscador y botón nuevo */
+        .top-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+        .search-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .search-group input {
+            padding: 8px 12px;
+            border: 1px solid #c5c5c5;
+            border-radius: 4px;
+            font-size: 15px;
+        }
+        .search-group button {
+            background: #1976d2;
+            color: #fff;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown select {
+            border: 1px solid #c5c5c5;
+            border-radius: 4px;
+            padding: 8px 12px;
+            font-size: 15px;
+        }
+        .btn-new {
+            background: #53b075;
+            color: #fff;
+            border: none;
+            padding: 8px 22px;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background .2s;
+        }
+        .btn-new:hover {
+            background: #40885a;
+        }
+        /* Tabla */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            margin-bottom: 18px;
+        }
+        th, td {
+            border: none;
+            padding: 12px 10px;
+            text-align: left;
+        }
+        thead th {
+            background: #f2f4f7;
+            color: #222;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        tbody tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        tbody tr:nth-child(odd) {
+            background: #f4f5f7;
+        }
+        tbody td {
+            font-size: 15px;
+        }
+        .actions-cell {
+            text-align: center;
+        }
+        .actions-cell a {
+            color: #1976d2;
+            margin: 0 2px;
+            font-size: 18px;
+            text-decoration: none;
+        }
+        /* Paginación */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 8px;
+            gap: 4px;
+        }
+        .pagination button,
+        .pagination span {
+            padding: 3px 11px;
+            background: #f8f9fa;
+            border: 1px solid #d3d3d3;
+            border-radius: 4px;
+            font-size: 16px;
+            color: #1976d2;
+            cursor: pointer;
+            min-width: 28px;
+        }
+        .pagination .active {
+            background: #1976d2;
+            color: #fff;
+            border: none;
+        }
+        .pagination button:disabled {
+            color: #aaa;
+            cursor: not-allowed;
+        }
+        .table-footer {
+            font-size: 12px;
+            color: #888;
+            text-align: right;
+            margin-top: 4px;
+        }
+        /* Responsive */
+        @media (max-width: 900px) {
+            .main-container, .content-panel {
+                margin-left: 0;
+                margin-right: 0;
+            }
+            .sidebar {
+                width: 100vw;
+                min-height: unset;
+            }
+            .main-container {
+                margin-left: 0;
+            }
+            .content-panel {
+                margin: 12px 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header-bar">
+        Administración
+    </div>
+    <div class="sidebar">
+        <div class="logo-bar">DIMSOR</div>
+        <img src="https://res.cloudinary.com/dxuk9bogw/image/upload/v1754330648/image_1_fpekno.png" alt="Robot" class="side-img">
+        <nav>
+            <a href="{% url 'dashboard_home' %}" {% if request.resolver_match.url_name == 'dashboard_home' %}class="active"{% endif %}>INICIO</a>
+            <a href="{% url 'dashboard_usuarios' %}" {% if request.resolver_match.url_name == 'dashboard_usuarios' %}class="active"{% endif %}>USUARIOS</a>
+            <a href="{% url 'dashboard_sesiones' %}" {% if request.resolver_match.url_name == 'dashboard_sesiones' %}class="active"{% endif %}>SESIONES</a>
+            <a href="{% url 'dashboard_roles' %}" {% if request.resolver_match.url_name == 'dashboard_roles' %}class="active"{% endif %}>
+                {% if request.resolver_match.url_name == 'dashboard_roles' %}
+                <span class="active-marker">&gt;</span>
+                {% endif %}
+                ROLES
+            </a>
+            <a href="{% url 'dashboard_robots' %}" {% if request.resolver_match.url_name == 'dashboard_robots' %}class="active"{% endif %}>ROBOTS</a>
+            <a href="{% url 'dashboard_emparejamiento' %}" {% if request.resolver_match.url_name == 'dashboard_emparejamiento' %}class="active"{% endif %}>EMPAREJAMIENTO</a>
+            <a href="{% url 'dashboard_emociones' %}" {% if request.resolver_match.url_name == 'dashboard_emociones' %}class="active"{% endif %}>EMOCIONES</a>
+            <a href="{% url 'dashboard_mensajes' %}" {% if request.resolver_match.url_name == 'dashboard_mensajes' %}class="active"{% endif %}>MENSAJES</a>
+        </nav>
+    </div>
+    <div class="main-container">
+        <div class="page-bar"></div>
+        <div class="content-panel">
+            {% block content %}
+            <!-- Aquí irá el contenido de cada sección -->
+            {% endblock %}
+        </div>
+    </div>
+</body>
+</html>

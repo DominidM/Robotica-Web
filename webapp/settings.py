@@ -41,12 +41,8 @@ ROOT_URLCONF = 'webapp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            # Si tienes una carpeta global de templates en la raíz del proyecto (Robotica-Web/templates/)
-            # Pon aquí: BASE_DIR / "templates"
-            # Si NO tienes, déjalo como []
-        ],
-        'APP_DIRS': True,  # ¡Esto es lo que permite que Django busque en core/templates/!
+        'DIRS': [BASE_DIR / "templates"],  # <-- Muy importante: así Django busca en /templates global
+        'APP_DIRS': True,  # Así Django busca también en templates/ de cada app
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',

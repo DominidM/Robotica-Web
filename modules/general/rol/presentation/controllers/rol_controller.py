@@ -9,4 +9,4 @@ class RolController:
         return self.service.listar_roles()
 
     def crear_rol(self, rol_create_dto: RolCreateDTO):
-        return self.service.crear_rol(rol_create_dto.nombre, rol_create_dto.descripcion)
+        return self.service.crear_rol(rol_create_dto)
