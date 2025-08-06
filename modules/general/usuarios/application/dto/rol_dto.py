@@ -1,10 +1,11 @@
 from pydantic import BaseModel
 
 class RolCreateDTO(BaseModel):
-    id: str
+    nombre: str
 
 class RolOutDTO(BaseModel):
     id: int
-    
+    nombre: str
+
     class Config:
-        orm_mode = True
+        from_attributes = True  

@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>DIMSOR - Home Pública</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
     :root {
       --gris-fondo: #C9CAC3;
@@ -82,7 +83,6 @@
       overflow-x: hidden;
       background: var(--gris-fondo);
     }
-    /* HERO */
     .hero-section {
       display: flex;
       width: 100vw;
@@ -101,7 +101,7 @@
       align-items: center;
       justify-content: flex-end;
       padding-left: 4vw;
-      padding-right: 12vw; /* menos padding para equilibrar */
+      padding-right: 12vw;
       box-sizing: border-box;
       margin: 0;
       background: none;
@@ -123,7 +123,7 @@
     .hero-img-full {
       width: 48vw;
       display: flex;
-      align-items: center; /* centra verticalmente */
+      align-items: center;
       justify-content: flex-end;
       background: none;
       box-sizing: border-box;
@@ -141,7 +141,6 @@
       margin: 0;
       background: var(--gris-linea);
     }
-    /* Flecha scroll down */
     .scroll-down-arrow {
       display: flex;
       justify-content: center;
@@ -172,7 +171,6 @@
       0%, 100% { transform: translateY(0);}
       50% { transform: translateY(10px);}
     }
-    /* ABOUT & EQUIPO */
     .about-row {
       display: flex;
       width: 100vw;
@@ -275,7 +273,6 @@
     .about-info .contact-btn .wa-icon {
       font-size: 1.3rem;
     }
-    /* VIDEO DEMO */
     .video-section {
       width: 100vw;
       max-width: 100vw;
@@ -304,7 +301,6 @@
       margin: 0.4rem auto 0 auto;
       border-radius: 0;
     }
-    /* Footer */
     footer {
       background: var(--negro);
       color: var(--blanco);
@@ -351,7 +347,6 @@
     .footer-company p {
       margin: 0.3em 0;
     }
-    /* Modo oscuro */
     body.dark-mode {
       --gris-fondo: #1a1a1a;
       --negro: #131313;
@@ -465,10 +460,26 @@
   </style>
 </head>
 <body>
+  <!-- SweetAlert2 para mostrar la key de registro -->
+  {% if registro_key %}
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      Swal.fire({
+        icon: 'success',
+        title: '¡Registro exitoso!',
+        html: 'Tu código de registro es:<br><strong style="font-size:1.5em;">{{ registro_key }}</strong><br><br>'+
+              '<button type="button" class="swal2-confirm swal2-styled" onclick="navigator.clipboard.writeText(\'{{ registro_key }}\');">Copiar código</button>',
+        showConfirmButton: false,
+        showCloseButton: true,
+        timer: 12000
+      });
+    });
+  </script>
+  {% endif %}
   <header>
     <div class="logo">DIMSOR</div>
     <nav>
-      <a href="#">KEY</a>
+      <a href="javascript:void(0);" onclick="mostrarFormularioKey()">KEY</a>     
       <a href="#">DESCARGAR APP</a>
       <button class="toggle-theme-btn" onclick="toggleTheme()" aria-label="Cambiar modo">
         <i class="fa-solid fa-moon"></i>
@@ -538,6 +549,54 @@
     </div>
   </footer>
   <script>
+    // Mostrar formulario SweetAlert2 para completar registro
+    function mostrarFormularioKey() {
+    Swal.fire({
+      title: 'Completar Registro',
+      html:
+        '<input id="swal-key" class="swal2-input" placeholder="Código de registro">' +
+        '<input id="swal-email" class="swal2-input" placeholder="Correo electrónico">' +
+        '<input id="swal-pass" type="password" class="swal2-input" placeholder="Contraseña">',
+      showCancelButton: true,
+      confirmButtonText: 'Registrar',
+      cancelButtonText: 'Cancelar',
+      focusConfirm: false,
+      preConfirm: () => {
+        const key = document.getElementById('swal-key').value.trim();
+        const email = document.getElementById('swal-email').value.trim();
+        const pass = document.getElementById('swal-pass').value;
+        if (!key || !email || !pass) {
+          Swal.showValidationMessage('Completa todos los campos');
+          return false;
+        }
+        return { key, email, pass };
+      }
+    }).then((result) => {
+      if (result.isConfirmed && result.value) {
+        // Aquí puedes hacer el fetch/POST a tu backend para completar registro
+        fetch('/api/usuarios/completar/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            registro_key: result.value.key,
+            email: result.value.email,
+            password: result.value.pass
+          })
+        })
+        .then(resp => resp.json())
+        .then(data => {
+          if (data.message === 'Registro completado') {
+            Swal.fire('¡Listo!', 'Registro completado correctamente.', 'success');
+          } else {
+            Swal.fire('Error', data.detail || 'No se pudo completar el registro', 'error');
+          }
+        })
+        .catch(() => {
+          Swal.fire('Error', 'No se pudo conectar con el servidor', 'error');
+        });
+      }
+    });
+  }
     // Modo claro/oscuro con persistencia y cambio de ícono
     function setThemeIcon() {
       const btn = document.querySelector('.toggle-theme-btn i');
@@ -549,7 +608,6 @@
         btn.classList.add('fa-moon');
       }
     }
-    // Al cargar
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark') {
       document.body.classList.add('dark-mode');

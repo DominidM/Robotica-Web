@@ -1,20 +1,16 @@
 from pydantic import BaseModel
+from datetime import datetime
+from typing import Optional
 
-class RolCreateDTO(BaseModel):
-    nombre: str
-    email: str
-    password: str
-    fecha_registro: str
-    rol_id: int
-    registro_key: str
 
-class RolOutDTO(BaseModel):
+class UsuarioOutDTO(BaseModel):
     id: int
     nombre: str
-    email: str
-    fecha_registro: str
-    rol_id: int
-    registro_key: str
+    email: Optional[str] = None   # <-- Hazlo opcional
+    fecha_registro: datetime | None = None
+    rol_id: int | None = None
+    rol_nombre: str | None = None        # <-- AGREGADO
+    registro_key: str | None = None
 
     class Config:
-        orm_mode = True
+        from_attributes = True

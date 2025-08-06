@@ -10,4 +10,4 @@ class RolOutDTO(BaseModel):
     descripcion: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True 

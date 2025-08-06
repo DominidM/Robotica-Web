@@ -25,7 +25,6 @@
                 <th style="width:60px;">ID</th>
                 <th>Nombre</th>
                 <th>Email</th>
-                <th>Fecha Registro</th>
                 <th>Rol</th>
                 <th style="width:110px;">Acciones</th>
             </tr>
@@ -36,7 +35,6 @@
                 <td>{{ usuario.id }}</td>
                 <td>{{ usuario.nombre }}</td>
                 <td>{{ usuario.email }}</td>
-                <td>{{ usuario.fecha_registro|date:"Y-m-d H:i" }}</td>
                 <td>{{ usuario.rol_nombre }}</td>
                 <td class="actions-cell" style="text-align:center;">
                     <a href="#" class="btn btn-sm btn-primary" title="Editar" style="color:#1976d2;"><i class="fa fa-edit"></i></a>
