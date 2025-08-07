@@ -1,7 +1,6 @@
+# modules/private/robots/infrastructure/model/robot_model.py
 from sqlalchemy import Column, Integer, String, Text, DateTime
-from sqlalchemy.ext.declarative import declarative_base
-
-Base = declarative_base()
+from modules.database import Base  
 
 class RobotModel(Base):
     __tablename__ = "robots"
