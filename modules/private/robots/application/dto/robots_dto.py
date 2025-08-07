@@ -22,3 +22,10 @@ class RobotDTO(BaseModel):
             descripcion=robot.descripcion,
             fecha_registro=robot.fecha_registro
         )
+
+class RobotCreateDTO(BaseModel):
+    nombre: str
+    identificador_unico: str
+    ip_actual: Optional[str] = None
+    estado: Optional[str] = None
+    descripcion: Optional[str] = None

@@ -11,3 +11,5 @@ def listar_robots(db=Depends(get_db)):
     service = RobotsService(repo)
     robots = service.listar_robots()
     return [robot.__dict__ for robot in robots]
+
+

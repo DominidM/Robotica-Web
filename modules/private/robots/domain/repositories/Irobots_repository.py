@@ -13,8 +13,18 @@ class IRobotsRepository(ABC):
         pass
 
     @abstractmethod
+    def get_by_identificador_unico(self, identificador_unico: str) -> Robot:
+        """Devuelve un robot por su identificador único."""
+        pass
+
+    @abstractmethod
     def add(self, robot: Robot):
-        """Agrega un robot."""
+        """Agrega un robot, devuelve el id."""
+        pass
+
+    @abstractmethod
+    def add_and_return(self, robot: Robot) -> Robot:
+        """Agrega un robot y lo devuelve como entidad."""
         pass
 
     @abstractmethod
