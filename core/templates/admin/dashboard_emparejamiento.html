@@ -37,10 +37,10 @@
                 <td>{{ emp.id }}</td>
                 <td>{{ emp.usuario_nombre }}</td>
                 <td>{{ emp.robot_nombre }}</td>
-                <td>{{ emp.fecha_inicio|date:"Y-m-d H:i" }}</td>
+                <td>{{ emp.fecha_inicio }}</td>
                 <td>
                     {% if emp.fecha_fin %}
-                        {{ emp.fecha_fin|date:"Y-m-d H:i" }}
+                        {{ emp.fecha_fin }}
                     {% else %}
                         -
                     {% endif %}

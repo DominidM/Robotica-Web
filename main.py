@@ -1,4 +1,6 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
 import modules.models  # Importar ANTES de las rutas
 
 from modules.private.robots.presentation.routes.robots_routes import router as robot_router
@@ -10,6 +12,15 @@ from modules.public.emociones.presentation.routes.emociones_routes import router
 from modules.public.mensajes.presentation.routes.mensajes_routes import router as mensajes_router
 
 app = FastAPI()
+
+# --- Habilitar CORS ---
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # O restringe a ["http://localhost:8000"] para mayor seguridad
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(robot_router, prefix="/api/robots")
 app.include_router(rol_router, prefix="/api/roles")

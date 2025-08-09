@@ -18,3 +18,6 @@ class UsuarioController:
     
     def crear_usuario_web(self, dto: UsuarioCreateWebDTO):
         return self.service.crear_usuario_web(dto)
+    
+    def buscar_por_registro_key(self, registro_key: str):
+        return self.service.buscar_por_registro_key(registro_key)

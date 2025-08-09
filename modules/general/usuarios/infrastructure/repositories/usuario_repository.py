@@ -1,6 +1,7 @@
 from modules.general.usuarios.infrastructure.model.usuario_model import UsuarioModel
 from modules.database import SessionLocal
 from sqlalchemy.exc import NoResultFound
+from datetime import datetime
 
 class UsuarioRepository:
     def __init__(self, db_session=None):
@@ -41,6 +42,9 @@ class UsuarioRepository:
             # Cambia el rol a cliente (3) si era invitado (1)
             if usuario.rol_id == 1:
                 usuario.rol_id = 3
+            # <<<<< ASIGNA LA FECHA SI ESTÁ VACÍA >>>>>
+            if not usuario.fecha_registro:
+                usuario.fecha_registro = datetime.utcnow()
             self.db.commit()
             self.db.refresh(usuario)
             return usuario
@@ -58,3 +62,10 @@ class UsuarioRepository:
         self.db.commit()
         self.db.refresh(usuario)
         return usuario
+    
+    def get_by_registro_key(self, registro_key):
+        try:
+            usuario = self.db.query(UsuarioModel).filter(UsuarioModel.registro_key == registro_key).first()
+            return usuario
+        finally:
+            self.db.close()

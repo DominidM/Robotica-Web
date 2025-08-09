@@ -46,3 +46,14 @@ class UsuarioService:
             registro_key=dto.registro_key,
             rol_id=dto.rol_id
         )
+    
+    def buscar_por_registro_key(self, registro_key: str):
+        usuario = self.usuario_repository.get_by_registro_key(registro_key)
+        if usuario:
+            dto = UsuarioOutDTO.from_orm(usuario)
+            # Si tienes roles, añade el nombre del rol si lo necesitas
+            if hasattr(self, "rol_repository"):
+                roles = {rol.id: rol.nombre for rol in self.rol_repository.get_all()}
+                dto.rol_nombre = roles.get(usuario.rol_id, None)
+            return [dto]
+        return []

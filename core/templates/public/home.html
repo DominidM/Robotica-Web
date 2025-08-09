@@ -462,7 +462,6 @@
   </style>
 </head>
 <body>
-  <!-- SweetAlert2 para mostrar la key de registro -->
   {% if registro_key %}
   <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -489,7 +488,6 @@
     </nav>
   </header>
   <main>
-    <!-- HERO EXCLUSIVO -->
     <section class="hero-section">
       <div class="hero-txt-block">
         <h1>
@@ -500,9 +498,7 @@
         <img src="https://res.cloudinary.com/dxuk9bogw/image/upload/v1754330648/image_1_fpekno.png" alt="Robot Amigo">
       </div>
     </section>
-    <!-- Flecha scroll down -->
     <a href="#about-row" class="scroll-down-arrow" aria-label="Ir a la siguiente sección"><span>&#8595;</span></a>
-    <!-- EQUIPO & SOBRE NOSOTROS -->
     <section class="about-row" id="about-row">
       <div class="about-img">
         <img src="https://res.cloudinary.com/dxuk9bogw/image/upload/v1754330639/image_3_s51p0p.png" alt="Equipo DIMSOR">
@@ -520,7 +516,6 @@
         </a>
       </div>
     </section>
-    <!-- VIDEO DEMO -->
     <section class="video-section">
       <div class="video-container">
         <video controls poster="./assets/video_poster.jpg" width="100%" height="100%">
@@ -553,52 +548,53 @@
   <script>
     // Mostrar formulario SweetAlert2 para completar registro
     function mostrarFormularioKey() {
-    Swal.fire({
-      title: 'Completar Registro',
-      html:
-        '<input id="swal-key" class="swal2-input" placeholder="Código de registro">' +
-        '<input id="swal-email" class="swal2-input" placeholder="Correo electrónico">' +
-        '<input id="swal-pass" type="password" class="swal2-input" placeholder="Contraseña">',
-      showCancelButton: true,
-      confirmButtonText: 'Registrar',
-      cancelButtonText: 'Cancelar',
-      focusConfirm: false,
-      preConfirm: () => {
-        const key = document.getElementById('swal-key').value.trim();
-        const email = document.getElementById('swal-email').value.trim();
-        const pass = document.getElementById('swal-pass').value;
-        if (!key || !email || !pass) {
-          Swal.showValidationMessage('Completa todos los campos');
-          return false;
-        }
-        return { key, email, pass };
-      }
-    }).then((result) => {
-      if (result.isConfirmed && result.value) {
-        // Aquí puedes hacer el fetch/POST a tu backend para completar registro
-        fetch('/api/usuarios/completar/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            registro_key: result.value.key,
-            email: result.value.email,
-            password: result.value.pass
-          })
-        })
-        .then(resp => resp.json())
-        .then(data => {
-          if (data.message === 'Registro completado') {
-            Swal.fire('¡Listo!', 'Registro completado correctamente.', 'success');
-          } else {
-            Swal.fire('Error', data.detail || 'No se pudo completar el registro', 'error');
+      Swal.fire({
+        title: 'Completar Registro',
+        html:
+          '<input id="swal-key" class="swal2-input" placeholder="Código de registro">' +
+          '<input id="swal-email" class="swal2-input" placeholder="Correo electrónico">' +
+          '<input id="swal-pass" type="password" class="swal2-input" placeholder="Contraseña">',
+        showCancelButton: true,
+        confirmButtonText: 'Registrar',
+        cancelButtonText: 'Cancelar',
+        focusConfirm: false,
+        preConfirm: () => {
+          const key = document.getElementById('swal-key').value.trim();
+          const email = document.getElementById('swal-email').value.trim();
+          const pass = document.getElementById('swal-pass').value;
+          if (!key || !email || !pass) {
+            Swal.showValidationMessage('Completa todos los campos');
+            return false;
           }
-        })
-        .catch(() => {
-          Swal.fire('Error', 'No se pudo conectar con el servidor', 'error');
-        });
-      }
-    });
-  }
+          return { key, email, pass };
+        }
+      }).then((result) => {
+        if (result.isConfirmed && result.value) {
+          // Usa la URL completa de tu backend FastAPI:
+          fetch('http://localhost:8001/api/usuarios/completar/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              registro_key: result.value.key,
+              email: result.value.email,
+              password: result.value.pass
+            })
+          })
+          .then(resp => resp.json())
+          .then(data => {
+            // MODIFICADO: éxito si hay id y email en la respuesta
+            if (data && data.id && data.email) {
+              Swal.fire('¡Listo!', 'Registro completado correctamente.', 'success');
+            } else {
+              Swal.fire('Error', data.detail || 'No se pudo completar el registro', 'error');
+            }
+          })
+          .catch(() => {
+            Swal.fire('Error', 'No se pudo conectar con el servidor', 'error');
+          });
+        }
+      });
+    }
     // Modo claro/oscuro con persistencia y cambio de ícono
     function setThemeIcon() {
       const btn = document.querySelector('.toggle-theme-btn i');

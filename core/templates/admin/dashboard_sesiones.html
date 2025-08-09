@@ -36,10 +36,10 @@
                 <td>{{ sesion.id }}</td>
                 <td>{{ sesion.usuario_nombre }}</td>
                 <td>{{ sesion.robot_nombre }}</td>
-                <td>{{ sesion.fecha_inicio|date:"Y-m-d H:i" }}</td>
+                <td>{{ sesion.fecha_inicio }}</td>
                 <td>
                     {% if sesion.fecha_fin %}
-                        {{ sesion.fecha_fin|date:"Y-m-d H:i" }}
+                        {{ sesion.fecha_fin }}
                     {% else %}
                         -
                     {% endif %}
