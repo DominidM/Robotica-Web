@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth import logout  # <-- Import logout correctly!
 import requests
 
 def login_view(request):
@@ -19,6 +20,10 @@ def usuarios_list(request):
         usuarios = []
         print("Error consultando API de usuarios:", e)
     return render(request, 'admin/dashboard_usuarios.html', {"usuarios": usuarios})
+
+def dashboard_logout(request):
+    logout(request)  # <-- Correct use after importing!
+    return render(request, 'admin/dashboard_logout.html')
 
 def sesiones_list(request):
     api_url = "http://127.0.0.1:8001/api/sesiones/"

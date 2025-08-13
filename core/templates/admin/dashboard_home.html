@@ -6,261 +6,390 @@
     <title>Administración | DIMSOR</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %}" />
-
-    <!-- Puedes reemplazar por tu propio CSS o usar Bootstrap si lo deseas -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
     <style>
-        body {
-            background: #222724;
-            margin: 0;
-            font-family: 'Montserrat', Arial, sans-serif;
-        }
-        .header-bar {
-            background: #2d2326;
-            height: 48px;
-            color: #aaa;
-            padding-left: 40px;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-        }
-        .sidebar {
-            width: 240px;
-            background: #192721;
-            color: #fff;
-            min-height: 100vh;
-            float: left;
-            display: flex;
-            flex-direction: column;
-        }
-        .sidebar .logo-bar {
-            background: #2d2326;
-            padding: 8px 0 8px 32px;
-            font-size: 32px;
-            letter-spacing: 2px;
-            color: #fff;
-            font-family: 'Georgia', serif;
-        }
-        .sidebar .side-img {
-            width: 180px;
-            height: 110px;
-            margin: 24px auto 16px auto;
-            border-radius: 6px;
-            background: #222;
-            object-fit: cover;
-            display: block;
-        }
-        .sidebar nav {
-            flex: 1;
-            margin-left: 32px;
-        }
-        .sidebar nav a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 18px;
-            display: block;
-            margin-bottom: 6px;
-            letter-spacing: 1px;
-            position: relative;
-            padding-left: 10px;
-            transition: color 0.2s;
-        }
-        .sidebar nav a.active,
-        .sidebar nav a:hover {
-            color: #b9e2ac;
-        }
-        .sidebar nav .active-marker {
-            position: absolute;
-            left: -12px;
-            color: #b9e2ac;
-        }
-        .main-container {
-            margin-left: 240px;
-            padding: 0;
-            background: transparent;
-            min-height: 100vh;
-        }
-        .page-bar {
-            background: #406356;
-            padding: 12px 0 12px 0;
-            margin: 0 0 30px 0;
-        }
-        .content-panel {
-            background: #f5f6fa;
-            margin: 32px 48px;
-            border-radius: 8px;
-            box-shadow: 0 4px 16px 0 #0002;
-            padding: 30px 30px 40px 30px;
-            min-height: 400px;
-        }
-        /* Estilos para el buscador y botón nuevo */
-        .top-toolbar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 24px;
-        }
-        .search-group {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .search-group input {
-            padding: 8px 12px;
-            border: 1px solid #c5c5c5;
-            border-radius: 4px;
-            font-size: 15px;
-        }
-        .search-group button {
-            background: #1976d2;
-            color: #fff;
-            border: none;
-            padding: 8px 14px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-        .dropdown select {
-            border: 1px solid #c5c5c5;
-            border-radius: 4px;
-            padding: 8px 12px;
-            font-size: 15px;
-        }
-        .btn-new {
-            background: #53b075;
-            color: #fff;
-            border: none;
-            padding: 8px 22px;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background .2s;
-        }
-        .btn-new:hover {
-            background: #40885a;
-        }
-        /* Tabla */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: #fff;
-            margin-bottom: 18px;
-        }
-        th, td {
-            border: none;
-            padding: 12px 10px;
-            text-align: left;
-        }
-        thead th {
-            background: #f2f4f7;
-            color: #222;
-            font-size: 16px;
-            font-weight: 600;
-        }
-        tbody tr:nth-child(even) {
-            background: #f8f9fa;
-        }
-        tbody tr:nth-child(odd) {
-            background: #f4f5f7;
-        }
-        tbody td {
-            font-size: 15px;
-        }
-        .actions-cell {
-            text-align: center;
-        }
-        .actions-cell a {
-            color: #1976d2;
-            margin: 0 2px;
-            font-size: 18px;
-            text-decoration: none;
-        }
-        /* Paginación */
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 8px;
-            gap: 4px;
-        }
-        .pagination button,
-        .pagination span {
-            padding: 3px 11px;
-            background: #f8f9fa;
-            border: 1px solid #d3d3d3;
-            border-radius: 4px;
-            font-size: 16px;
-            color: #1976d2;
-            cursor: pointer;
-            min-width: 28px;
-        }
-        .pagination .active {
-            background: #1976d2;
-            color: #fff;
-            border: none;
-        }
-        .pagination button:disabled {
-            color: #aaa;
-            cursor: not-allowed;
-        }
-        .table-footer {
-            font-size: 12px;
-            color: #888;
-            text-align: right;
-            margin-top: 4px;
-        }
-        /* Responsive */
-        @media (max-width: 900px) {
-            .main-container, .content-panel {
-                margin-left: 0;
-                margin-right: 0;
-            }
-            .sidebar {
-                width: 100vw;
-                min-height: unset;
-            }
-            .main-container {
-                margin-left: 0;
-            }
-            .content-panel {
-                margin: 12px 5px;
-            }
-        }
+    :root {
+        --sidebar-width: 250px;
+        --primary-color: #181c1b;
+        --secondary-color: #f8f9fc;
+        --shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.10);
+        --color-card-primary: #2878FF;
+        --color-card-info: #19c8e6;
+        --color-card-warning: #f6c23e;
+        --color-card-success: #218650;
+    }
+    body {
+        font-family: 'Nunito', Arial, sans-serif;
+        background: #f4f6fa;
+        color: #222;
+        margin: 0;
+        padding: 0;
+    }
+    /* SIDEBAR */
+    .sidebar {
+        width: var(--sidebar-width);
+        min-height: 100vh;
+        background: linear-gradient(180deg, var(--primary-color) 0%, #16221F 100%);
+        color: white;
+        position: fixed;
+        top: 0;
+        left: 0;
+        transition: all 0.3s;
+        z-index: 1050;
+        box-shadow: var(--shadow);
+        display: flex;
+        flex-direction: column;
+    }
+    .sidebar-brand {
+        height: 4.375rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+        font-weight: 700;
+        padding: 1.5rem 1rem;
+        color: white;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        letter-spacing: 1px;
+    }
+    .sidebar .titu { font-family: "Italiana", serif; font-size: 32px; margin-left: 14px; }
+    .sidebar-divider { border-top: 1px solid rgba(255,255,255,0.15); margin: 1rem 0; }
+    .nav-link {
+        display: flex;
+        align-items: center;
+        color: rgba(255,255,255,0.88);
+        padding: 1rem 1.2rem;
+        margin: 0.15rem 0.6rem;
+        border-radius: 0.35rem;
+        font-size: 1.1em;
+        transition: all 0.2s;
+    }
+    .nav-link:hover, .nav-link.active-link { background: rgba(255,255,255,0.12); color: #b9e2ac; text-decoration: none; }
+    .nav-link i { margin-right: 0.9rem; width: 24px; font-size: 1.25em;}
+    /* Responsive Sidebar */
+    @media (max-width: 991px) {
+        .sidebar { position: fixed; left: 0; top: 0; height: 100vh; width: 220px; transition: all 0.3s;}
+        .sidebar.sidebar-hidden { transform: translateX(-100%);}
+        .sidebar.sidebar-visible { transform: translateX(0);}
+    }
+    @media (max-width: 576px) { .sidebar { width: 90vw;} }
+    /* MAIN CONTENT */
+    .main-content {
+        margin-left: var(--sidebar-width);
+        min-height: 100vh;
+        background: #f4f6fa;
+        display: flex;
+        flex-direction: column;
+        width: calc(100vw - var(--sidebar-width)); /* <--- Ajuste clave */
+        transition: margin-left 0.3s;
+    }
+    @media (max-width: 991px) { .main-content { margin-left: 0;} }
+    /* NAVBAR */
+    .navbar {
+        background: #181c1b !important;
+        box-shadow: var(--shadow);
+        border-bottom: 1px solid #e3e6f0;
+        padding: 1.4rem 2rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+    }
+    .navbar .mainContentTitle {
+        color: #fff;
+        font-weight: 700;
+        font-size: 1.7rem;
+        letter-spacing: 1px;
+        margin-left: 0.7rem;
+        margin-bottom: 0;
+    }
+    .navbar .btn.sidebar-toggle {
+        color: #fff;
+        border: none;
+        background: none;
+        font-size: 2.1rem;
+        padding: 0.5rem;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background 0.2s;
+        margin-right: 0.3rem;
+        display: none; /* Oculta en desktop */
+    }
+    @media (max-width: 991px) {
+        .navbar .btn.sidebar-toggle { display: inline-block; }
+    }
+    /* CENTRAR Y AMPLIAR CONTENIDO PRINCIPAL */
+    .container-fluid {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 2.5rem 2.2rem;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    @media (max-width: 1200px) { .container-fluid { max-width: 98vw; padding: 1.2rem;} }
+    @media (max-width: 991px) { .container-fluid { padding: 1rem; } }
+    @media (max-width: 576px) { .container-fluid { padding: 0.5rem;} }
+    /* WELCOME CARD */
+    .welcome-card {
+        border-radius: 1rem;
+        box-shadow: var(--shadow);
+        background: white;
+        margin-bottom: 1.6rem;
+        padding: 1.45rem 1.4rem;
+        font-size: 1.17em;
+        color: #222;
+        font-weight: 500;
+        text-align: center;
+    }
+    /* DASHBOARD CARDS TABULADOS */
+    .dashboard-row {
+        display: flex;
+        gap: 2rem;
+        margin-bottom: 1.6rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    .dashboard-card {
+        flex: 1 1 260px;
+        min-width: 260px;
+        max-width: 340px;
+        background: var(--secondary-color);
+        border: none;
+        border-radius: 1.1rem;
+        box-shadow: var(--shadow);
+        display: flex;
+        align-items: center;
+        padding: 1.5rem 1.4rem;
+        position: relative;
+        transition: all 0.2s;
+        font-size: 1.18em;
+    }
+    .dashboard-card .icon {
+        font-size: 3rem;
+        margin-right: 1.4rem;
+        opacity: 0.92;
+        flex-shrink: 0;
+    }
+    .dashboard-card .text-content {
+        flex: 1;
+        text-align: right;
+        font-size: 1.1em;
+    }
+    .dashboard-card .text-content p {
+        font-size: 1.12em;
+        margin-bottom: 0.3em;
+        color: #fff;
+        opacity: 0.82;
+    }
+    .dashboard-card .text-content h4 {
+        font-size: 2.25em;
+        font-weight: bold;
+        margin-bottom: 0;
+        margin-top: 0.2em;
+        color: #fff;
+        opacity: 0.99;
+    }
+    .dashboard-card.bg-primary { background: var(--color-card-primary);}
+    .dashboard-card.bg-info { background: var(--color-card-info);}
+    .dashboard-card.bg-warning { background: var(--color-card-warning); color: #333;}
+    .dashboard-card.bg-success { background: var(--color-card-success);}
+    /* Responsive dashboard cards */
+    @media (max-width: 991px) {
+        .dashboard-row { flex-direction: column; gap: 1rem;}
+        .dashboard-card { max-width: 100%; min-width: 0; }
+    }
+    /* CHARTS ROW */
+    .charts-row {
+        display: flex;
+        gap: 2rem;
+        margin-bottom: 1.2rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    .charts-col {
+        flex: 1 1 480px;
+        min-width: 320px;
+        max-width: 600px;
+    }
+    .card.chart-card {
+        border-radius: 1.1rem;
+        box-shadow: var(--shadow);
+        margin-bottom: 0;
+    }
+    .card-header { background: #f8f9fc; border-bottom: 1px solid #e3e6f0;}
+    .chart-container { position: relative; height: 340px; width: 100%;}
+    @media (max-width: 991px) {
+        .charts-row { flex-direction: column; gap: 1rem;}
+        .charts-col { max-width: 100%; min-width: 0;}
+        .chart-container { height: 210px;}
+    }
     </style>
 </head>
 <body>
-    <div class="header-bar">
-        Administración
-    </div>
-    <div class="sidebar">
-        <div class="logo-bar">DIMSOR</div>
-        <img src="https://res.cloudinary.com/dxuk9bogw/image/upload/v1754330648/image_1_fpekno.png" alt="Robot" class="side-img">
-        <nav>
-            <a href="{% url 'dashboard_home' %}" {% if request.resolver_match.url_name == 'dashboard_home' %}class="active"{% endif %}>INICIO</a>
-            <a href="{% url 'dashboard_usuarios' %}" {% if request.resolver_match.url_name == 'dashboard_usuarios' %}class="active"{% endif %}>USUARIOS</a>
-            <a href="{% url 'dashboard_sesiones' %}" {% if request.resolver_match.url_name == 'dashboard_sesiones' %}class="active"{% endif %}>SESIONES</a>
-            <a href="{% url 'dashboard_roles' %}" {% if request.resolver_match.url_name == 'dashboard_roles' %}class="active"{% endif %}>
-                {% if request.resolver_match.url_name == 'dashboard_roles' %}
-                <span class="active-marker">&gt;</span>
-                {% endif %}
-                ROLES
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar sidebar-visible">
+        <div class="sidebar-brand d-flex align-items-center">
+            <img src="https://res.cloudinary.com/dhuzpc1eh/image/upload/v1754726986/dimsor-log_qt0ozk.png" alt="Logo DIMSOR" width="70" height="50">
+            <span class="titu">DIMSOR</span>
+        </div>
+        <hr class="sidebar-divider">
+        <nav class="nav flex-column">
+            <a href="{% url 'dashboard_home' %}" class="nav-link {% if request.resolver_match.url_name == 'dashboard_home' %}active-link{% endif %}" data-section="home" data-tooltip="Inicio">
+                <i class="fas fa-home"></i> <span>Inicio</span>
             </a>
-            <a href="{% url 'dashboard_robots' %}" {% if request.resolver_match.url_name == 'dashboard_robots' %}class="active"{% endif %}>ROBOTS</a>
-            <a href="{% url 'dashboard_emparejamiento' %}" {% if request.resolver_match.url_name == 'dashboard_emparejamiento' %}class="active"{% endif %}>EMPAREJAMIENTO</a>
-            <a href="{% url 'dashboard_emociones' %}" {% if request.resolver_match.url_name == 'dashboard_emociones' %}class="active"{% endif %}>EMOCIONES</a>
-            <a href="{% url 'dashboard_mensajes' %}" {% if request.resolver_match.url_name == 'dashboard_mensajes' %}class="active"{% endif %}>MENSAJES</a>
+            <a href="{% url 'dashboard_usuarios' %}" class="nav-link {% if request.resolver_match.url_name == 'dashboard_usuarios' %}active-link{% endif %}" data-section="usuarios" data-tooltip="Usuarios">
+                <i class="fa-solid fa-user"></i> <span>Usuarios</span>
+            </a>
+            <a href="{% url 'dashboard_sesiones' %}" class="nav-link {% if request.resolver_match.url_name == 'dashboard_sesiones' %}active-link{% endif %}" data-section="sesiones" data-tooltip="Sesiones">
+                <i class="fa-solid fa-address-card"></i> <span>Sesiones</span>
+            </a>
+            <a href="{% url 'dashboard_roles' %}" class="nav-link {% if request.resolver_match.url_name == 'dashboard_roles' %}active-link{% endif %}" data-section="roles" data-tooltip="Roles">
+                <i class="fas fa-users"></i> <span>Roles</span>
+            </a>
+            <a href="{% url 'dashboard_robots' %}" class="nav-link {% if request.resolver_match.url_name == 'dashboard_robots' %}active-link{% endif %}" data-section="robots" data-tooltip="Robots">
+                <i class="fa-solid fa-robot"></i> <span>Robots</span>
+            </a>
+            <a href="{% url 'dashboard_emparejamiento' %}" class="nav-link {% if request.resolver_match.url_name == 'dashboard_emparejamiento' %}active-link{% endif %}" data-section="emparejamiento" data-tooltip="Emparejamiento">
+                <i class="fa-solid fa-link"></i> <span>Emparejamiento</span>
+            </a>
+            <a href="{% url 'dashboard_emociones' %}" class="nav-link {% if request.resolver_match.url_name == 'dashboard_emociones' %}active-link{% endif %}" data-section="emociones" data-tooltip="Emociones">
+                <i class="fa-solid fa-face-smile"></i> <span>Emociones</span>
+            </a>
+            <a href="{% url 'dashboard_mensajes' %}" class="nav-link {% if request.resolver_match.url_name == 'dashboard_mensajes' %}active-link{% endif %}" data-section="mensajes" data-tooltip="Mensajes">
+                <i class="fa-solid fa-envelope"></i> <span>Mensajes</span>
+            </a>
+            <hr class="sidebar-divider">
+            <a href="{% url 'dashboard_logout' %}" class="nav-link" data-tooltip="Salir">
+                <i class="fas fa-sign-out-alt"></i> <span>Salir</span>
+            </a>
         </nav>
-    </div>
-    <div class="main-container">
-        <div class="page-bar"></div>
-        <div class="content-panel">
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Navigation -->
+        <nav class="navbar navbar-expand navbar-light bg-white shadow-sm">
+            <button class="btn sidebar-toggle" type="button" id="sidebarToggleTop">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h1 class="mainContentTitle mb-0">Panel de Administración</h1>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-user-circle fa-fw"></i>
+                        <span class="d-none d-lg-inline text-gray-600 small">Admin User</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i> Perfil</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i> Configuración</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{% url 'dashboard_logout' %}">
+                            <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i> Salir
+                        </a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <div class="container-fluid" id="dynamicContentArea">
             {% block content %}
-            <!-- Aquí irá el contenido de cada sección -->
+            <div class="welcome-card">
+                ¡Bienvenido al panel de administración del robot DIMSOR!
+            </div>
+            <div class="dashboard-row">
+                <div class="dashboard-card bg-primary">
+                    <div class="icon"><i class="fa-solid fa-face-smile"></i></div>
+                    <div class="text-content">
+                        <p>Emociones</p>
+                        <h4>58</h4>
+                    </div>
+                </div>
+                <div class="dashboard-card bg-info">
+                    <div class="icon"><i class="fa-solid fa-robot"></i></div>
+                    <div class="text-content">
+                        <p>Robots</p>
+                        <h4>1,667</h4>
+                    </div>
+                </div>
+                <div class="dashboard-card bg-warning">
+                    <div class="icon"><i class="fa-solid fa-users"></i></div>
+                    <div class="text-content">
+                        <p>Usuarios</p>
+                        <h4>1,730</h4>
+                    </div>
+                </div>
+                <div class="dashboard-card bg-success">
+                    <div class="icon"><i class="fa-solid fa-envelope"></i></div>
+                    <div class="text-content">
+                        <p>Mensajes</p>
+                        <h4>1,807</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="charts-row">
+                <div class="charts-col">
+                    <div class="card chart-card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Gráfico 1</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container">
+                                <canvas id="gradesChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="charts-col">
+                    <div class="card chart-card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Gráfico 2</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container">
+                                <canvas id="sectionsChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             {% endblock %}
         </div>
     </div>
+    <!-- Bootstrap JS y Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+    // Sidebar hamburguesa - responsive toggle
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggle = document.getElementById('sidebarToggleTop');
+    function toggleSidebar() {
+        if (window.innerWidth <= 991) {
+            sidebar.classList.toggle('sidebar-visible');
+            sidebar.classList.toggle('sidebar-hidden');
+        }
+    }
+    sidebarToggle.addEventListener('click', toggleSidebar);
+    document.addEventListener('click', function(e) {
+        if (window.innerWidth <= 991 && sidebar.classList.contains('sidebar-visible')) {
+            if (!sidebar.contains(e.target) && !sidebarToggle.contains(e.target)) {
+                sidebar.classList.remove('sidebar-visible');
+                sidebar.classList.add('sidebar-hidden');
+            }
+        }
+    });
+    function checkSidebarState() {
+        if(window.innerWidth <= 991) {
+            sidebar.classList.remove('sidebar-visible');
+            sidebar.classList.add('sidebar-hidden');
+        } else {
+            sidebar.classList.remove('sidebar-hidden');
+            sidebar.classList.add('sidebar-visible');
+        }
+    }
+    window.addEventListener('resize', checkSidebarState);
+    window.addEventListener('DOMContentLoaded', checkSidebarState);
+    </script>
 </body>
 </html>

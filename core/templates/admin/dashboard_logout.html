@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sesión cerrada | DIMSOR</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %}" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light d-flex align-items-center justify-content-center" style="height:100vh;">
+    <div class="card shadow-lg p-4" style="max-width: 400px;">
+        <div class="card-body text-center">
+            <img src="https://res.cloudinary.com/dhuzpc1eh/image/upload/v1754726986/dimsor-log_qt0ozk.png" alt="Logo DIMSOR" width="60">
+            <h2 class="mt-3 mb-2">Sesión cerrada</h2>
+            <p class="mb-4">Has cerrado sesión correctamente.</p>
+            <a href="{% url 'admin_login' %}" class="btn btn-primary w-100">Ir al Login</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -11,4 +11,5 @@ urlpatterns = [
     path('dashboard/emparejamiento/', views.emparejamiento_list, name='dashboard_emparejamiento'),
     path('dashboard/emociones/', views.emociones_list, name='dashboard_emociones'),
     path('dashboard/mensajes/', views.mensajes_list, name='dashboard_mensajes'),
+    path('dashboard/logout/', views.dashboard_logout, name='dashboard_logout'),
 ]
