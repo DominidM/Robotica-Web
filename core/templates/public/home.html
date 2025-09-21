@@ -7,459 +7,224 @@
   <title>DIMSOR - Home Pública</title>
   <link rel="icon" type="image/x-icon" href="{% static 'assets/logo.ico' %}" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
-    :root {
-      --gris-fondo: #C9CAC3;
-      --verde-oscuro: #364d47;
-      --negro: #1c1414;
-      --blanco: #fff;
-      --gris-medio: #9da09b;
-      --gris-linea: #babeba;
-      --transition: 0.3s;
+    :root{
+      --brand-blue-900:#0a6aa1;
+      --brand-blue-700:#1589c6;
+      --brand-blue-600:#1aa0d8;
+      --brand-blue-500:#2db0e2;
+      --brand-blue-200:#cfeefe;
+      --brand-cyan-100:#e6f7ff;
+      --ink-900:#0f172a;
+      --ink-700:#334155;
+      --muted-600:#6b7280;
+      --white:#ffffff;
     }
-    html, body {
-      margin: 0;
-      padding: 0;
-      background: var(--gris-fondo);
-      color: var(--negro);
-      font-family: 'Georgia', 'Segoe UI', Arial, sans-serif;
-      min-height: 100vh;
-      width: 100vw;
-      overflow-x: hidden;
-      transition: background var(--transition), color var(--transition);
+
+    html,body{
+      height:100%;
+      background:#fff;
+      color:var(--ink-900);
+      font-family:'Poppins',system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans","Liberation Sans",Arial,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
     }
-    header {
-      background: var(--negro);
-      color: var(--blanco);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 48px;
-      height: 64px;
-      font-size: 1.12rem;
-      box-sizing: border-box;
-      width: 100vw;
-      max-width: 100vw;
-      margin-bottom: 0;
-      border: none;
+
+    /* ===== Navbar ===== */
+    .navbar{
+      padding-top:.75rem;
+      padding-bottom:.75rem;
     }
-    .logo {
-      font-family: 'Italiana';
-      font-size: 2rem;
-      letter-spacing: 2px;
-      font-weight: 500;
+    .navbar .nav-link{
+      font-weight:700;
+      letter-spacing:.5px;
+      text-transform:uppercase;
+      color:var(--brand-blue-700);
+      padding:.5rem 1rem !important;
     }
-    nav {
-      display: flex;
-      gap: 2.7rem;
+    .navbar .nav-link:hover,
+    .navbar .nav-link:focus{ color:var(--brand-blue-500); }
+
+    /* ===== Hero ===== */
+    .hero{
+      position:relative;
+      overflow:hidden;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      isolation:isolate;
     }
-    nav a, .toggle-theme-btn {
-      color: var(--blanco);
-      text-decoration: none;
-      letter-spacing: 1px;
-      font-size: 1.06rem;
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-family: inherit;
-      transition: color 0.2s;
-      outline: none;
-      padding: 0;
-      margin-left: 1.2rem;
+
+    /* Panel azul curvo del lado derecho */
+    .hero-bg{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
     }
-    nav a:hover, .toggle-theme-btn:hover {
-      color: var(--gris-medio);
+    .hero-bg::before{
+      content:"";
+      position:absolute;
+      top:-10%;
+      right:0%;
+      width:80vw;
+      height:120vh;
+      background:radial-gradient(110% 90% at 30% 50%, var(--brand-blue-500) 0%, var(--brand-blue-600) 55%, var(--brand-blue-700) 100%);
+      clip-path:ellipse(58% 60% at 95% 50%);
+      z-index:-1;
+      filter:saturate(110%);
     }
-    .toggle-theme-btn {
-      font-size: 1.25rem;
-      padding-left: 0.7rem;
-      vertical-align: middle;
+    .hero-bg::after{
+      content:"";
+      position:absolute;
+      top:-12%;
+      right:-1%;
+      width:78vw;
+      height:116vh;
+      background:radial-gradient(100% 85% at 30% 50%, #bfe9ff 0%, #b5dcff 26%, #9fd3ff 48%, #7fc6ff 70%, rgba(127,198,255,0) 100%);
+      opacity:.6;
+      clip-path:ellipse(55% 57% at 96% 50%);
+      z-index:-1;
+      filter:blur(2px);
     }
-    main {
-      margin: 0;
-      padding: 0;
-      width: 100vw;
-      max-width: 100vw;
-      box-sizing: border-box;
-      overflow-x: hidden;
-      background: var(--gris-fondo);
+
+    .hero .title{
+      font-weight:800;
+      color:var(--brand-blue-700);
+      letter-spacing:1px;
+      line-height:1.05;
+      font-size:clamp(2.35rem, 4.5vw + .5rem, 4.25rem);
+      margin-bottom:1rem;
     }
-    .hero-section {
-      display: flex;
-      width: 100vw;
-      min-height: 440px;
-      box-sizing: border-box;
-      justify-content: space-between;
-      align-items: stretch;
-      background: var(--gris-fondo);
-      margin-top: 0;
-      padding-top: 0;
+
+    .hero .lead{
+      color:#5a8aa4;
+      font-size:clamp(1rem, 1.1vw + .6rem, 1.15rem);
+      max-width:48ch;
     }
-    .hero-txt-block {
-      width: 52vw;
-      min-width: 320px;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      padding-left: 4vw;
-      padding-right: 12vw;
-      box-sizing: border-box;
-      margin: 0;
-      background: none;
+
+    .btn-more{
+      background:var(--brand-blue-500);
+      border:none;
+      color:#fff;
+      font-weight:700;
+      padding:.9rem 1.4rem;
+      border-radius:14px;
+      letter-spacing:.4px;
+      box-shadow:0 8px 20px rgba(45,176,226,.32);
     }
-    .hero-txt-block h1 {
-      font-family: 'Italiana';
-      color: var(--verde-oscuro);
-      font-size: 3vw;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      line-height: 1.2em;
-      margin: 0;
-      border-left: 4px solid var(--gris-linea);
-      padding-left: 32px;
-      text-shadow: none;
-      text-align: left;
-      word-break: break-word;
+    .btn-more:hover{ background:var(--brand-blue-600); color:#fff; }
+
+    /* ===== Robot + base ===== */
+    .robot-wrap{
+      position:relative;
+      display:flex;
+      align-items:flex-end;
+      justify-content:center;
+      min-height:420px;
+      height:100%;
+      padding-top:2rem;
+      padding-bottom:2rem;
     }
-    .hero-img-full {
-      width: 48vw;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      background: none;
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    .robot-shadow{
+      position:absolute;
+      bottom:18px;
+      left:50%;
+      transform:translateX(-50%);
+      width:60%;
+      height:14px;
+      background:radial-gradient(60% 100% at 50% 50%, rgba(0,0,0,.20) 0%, rgba(0,0,0,0) 70%);
+      filter:blur(2px);
     }
-    .hero-img-full img {
-      width: 100%;
-      object-fit: cover;
-      object-position: center;
-      border: none;
-      border-radius: 0 24px 0 0;
-      box-shadow: 0 5px 20px 0 rgba(40,50,40,0.09);
-      display: block;
-      margin: 0;
-      background: var(--gris-linea);
+    .robot-img{
+      max-width:401px; /* tamaño máximo del robot */
+      width:123%;
+      height:auto;
+      z-index:2;
+      user-select:none;
+      -webkit-user-drag:none;
     }
-    .scroll-down-arrow {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 88px;
-      height: 151px;
-      font-size: 3.2rem;
-      color: var(--verde-oscuro);
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      margin: 0 auto -24px auto;
+
+    /* ===== Secciones placeholder para los anchors ===== */
+    section.section{ padding:72px 0; }
+    .section .section-title{
+      color:var(--brand-blue-700);
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.6px;
+      margin-bottom:.75rem;
+    }
+    .muted{ color:var(--muted-600); }
+
+    /* ===== Responsivo fino ===== */
+    @media (max-width: 992px) {
+      .hero{ padding-top:1rem; }
+      .hero-bg::before{
+        right:-50%;
+        width:110vw;
+        height:110vh;
+        clip-path:ellipse(70% 75% at 120% 30%);
+      }
+      .hero-bg::after{
+        right:-48%;
+        width:108vw;
+        height:108vh;
+        clip-path:ellipse(68% 72% at 118% 30%);
+      }
+      .robot-wrap{
+        order:-1; /* Robot arriba en móvil */
+        min-height:360px;
+        margin-bottom:1rem;
+      }
+      .hero .lead{ margin-inline:auto; }
+      .navbar-collapse{
+        background:#fff;
+        border-top:1px solid #e5e7eb;
+        padding:0 .75rem .75rem;
+        border-radius:0 0 12px 12px;
+      }
+    }
+
+    /* Pequeños detalles visuales */
+    .bullet{
+      display:inline-block;
+      width:8px; height:8px; border-radius:50%;
+      background:var(--brand-blue-500);
+      margin-right:.5rem;
+      transform:translateY(-1px);
+    }
+
+    /* Footer mínimo */
+    .site-footer{
+      border-top:1px solid #eef2f7;
+      padding:28px 0;
+      color:#7a8796;
+      font-size:.95rem;
+      background:#fff;
+    }
+    .custom-list {
+      list-style: none;          /* quitamos los bullets por defecto */
+      padding-left: 3.2rem;      /* margen a la izquierda */
+      margin-top: -0.4rem;
+    }
+
+    .custom-list li {
       position: relative;
-      top: -14px;
-      z-index: 10;
-      text-decoration: none;
-      transition: color .2s;
-    }
-    .scroll-down-arrow:hover {
-      color: #222;
-    }
-    .scroll-down-arrow span {
-      animation: arrow-bounce 1.2s infinite;
-      display: block;
-      line-height: 1;
-    }
-    @keyframes arrow-bounce {
-      0%, 100% { transform: translateY(0);}
-      50% { transform: translateY(10px);}
-    }
-    .about-row {
-      display: flex;
-      width: 100vw;
-      max-width: 100vw;
-      justify-content: flex-start;
-      align-items: stretch;
-      margin: 0;
-      padding: 0;
-      background: var(--gris-fondo);
-      min-height: 430px;
-    }
-    .about-img {
-      flex: 0 0 650px;
-      margin: 0;
-      display: flex;
-      align-items: stretch;
-      justify-content: flex-end;
-      min-width: 330px;
-      padding: 0;
-      height: 100%;
-    }
-    .about-img img {
-      width: 100%;
-      height: 430px;
-      object-fit: cover;
-      background: var(--gris-linea);
-      border: none;
-      border-radius: 0;
-      box-shadow: 0 4px 12px 0 rgba(40,50,40,0.10);
-      margin: 0;
-      display: block;
-      padding: 0;
-    }
-    .about-info {
-      flex: 1 1 0;
-      background: var(--verde-oscuro);
-      color: var(--blanco);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      min-width: 320px;
-      padding: 2.2rem 3vw 2.2rem 3vw;
-      border-radius: 0;
-      margin: 0;
-      box-sizing: border-box;
-      height: 430px;
-    }
-    .about-info h2 {
-      font-family: 'Georgia', serif;
-      font-size: 1.25rem;
-      margin: 0 0 1.3rem 0;
-      font-weight: 500;
-      letter-spacing: 1.3px;
-      border-bottom: 1.5px solid var(--gris-linea);
-      padding-bottom: 0.4rem;
-      text-transform: uppercase;
-      text-align: left;
-    }
-    .about-info p {
-      margin: 0 0 1.8rem 0;
-      font-size: 1.07rem;
-      letter-spacing: 0.3px;
-      font-weight: 400;
-      line-height: 1.45em;
-      text-align: left;
-      word-break: break-word;
-    }
-    .about-info .contact-btn {
-      background: var(--negro);
-      color: var(--blanco);
-      border: none;
-      border-radius: 0;
-      padding: 0.9rem 0;
-      font-size: 1.08rem;
-      width: 80%;
-      max-width: 320px;
-      min-width: 200px;
-      margin-top: 0;
-      margin-bottom: 0;
-      margin-left: 0;
-      margin-right: 0;
-      align-self: flex-start;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.7em;
-      font-family: inherit;
-      letter-spacing: 1px;
-      transition: background 0.2s;
-      text-decoration: none;
-      font-weight: 500;
-      box-shadow: none;
-      text-align: center;
-    }
-    .about-info .contact-btn:hover {
-      background: #232323;
-      color: #d9d9d6;
-    }
-    .about-info .contact-btn .wa-icon {
-      font-size: 1.3rem;
-    }
-    .video-section {
-      width: 100vw;
-      max-width: 100vw;
-      text-align: center;
-      margin: 3vw 0 0 0;
-    }
-    .video-container {
-      width: min(95vw, 820px);
-      aspect-ratio: 16/9;
-      background: #111;
-      overflow: hidden;
-      margin: 0 auto 0.35rem auto;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(30,30,30,0.11);
-      border: none;
-      display: block;
-    }
-    .video-section label {
-      color: var(--blanco);
-      background: var(--negro);
-      padding: 0.11rem 1.2rem;
+      margin-bottom: .4rem;
+      color: #475569;            /* gris azulado como tu texto */
       font-size: 1rem;
-      letter-spacing: 1px;
-      display: block;
-      width: fit-content;
-      margin: 0.4rem auto 0 auto;
-      border-radius: 0;
     }
-    footer {
-      background: var(--negro);
-      color: var(--blanco);
-      padding: 2.1rem 7vw 2.1rem 7vw;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: flex-start;
-      font-size: 1rem;
-      margin-top: 0;
-      border-top: 0.5px solid #232323;
-      width: 100vw;
-      max-width: 100vw;
-      box-sizing: border-box;
-    }
-    .footer-info {
-      flex: 2 1 360px;
-    }
-    .footer-info p, .footer-info a {
-      color: var(--blanco);
-      margin: 0.2em 0;
-      text-decoration: none;
-      font-size: 1.02rem;
-      font-weight: 400;
-    }
-    .footer-icons {
-      display: flex;
-      gap: 1.2rem;
-      margin-top: 1rem;
-    }
-    .footer-icons a {
-      color: var(--blanco);
-      font-size: 1.5rem;
-      transition: color 0.2s;
-    }
-    .footer-icons a:hover {
-      color: var(--gris-fondo);
-    }
-    .footer-company {
-      flex: 1 1 260px;
-      text-align: right;
-      font-size: 0.95rem;
-    }
-    .footer-company p {
-      margin: 0.3em 0;
-    }
-    body.dark-mode {
-      --gris-fondo: #1a1a1a;
-      --negro: #131313;
-      --blanco: #fff;
-      --verde-oscuro: #28584d;
-      --gris-medio: #b6d6c6;
-      --gris-linea: #49514c;
-    }
-    body.dark-mode .about-info {
-      background: #212e2b;
-      color: #fff;
-    }
-    body.dark-mode .about-info h2,
-    body.dark-mode .about-info p {
-      border-bottom: 1.5px solid #49514c;
-      color: #fff;
-    }
-    body.dark-mode .video-section label {
-      background: #222;
-      color: #eee;
-    }
-    body.dark-mode .hero-txt-block h1 {
-      color: #b6d6c6;
-    }
-    body.dark-mode .about-info .contact-btn {
-      background: #232323;
-      color: #e1e1e1;
-    }
-    body.dark-mode .about-info .contact-btn:hover {
-      background: #33413d;
-      color: #b6d6c6;
-    }
-    html {
-      scroll-behavior: smooth;
-    }
-    @media (max-width: 1100px) {
-      .hero-section,
-      .about-row {
-        flex-direction: column;
-        align-items: center;
-        width: 100vw;
-        max-width: 100vw;
-      }
-      .hero-txt-block,
-      .hero-img-full,
-      .about-img,
-      .about-info {
-        max-width: 98vw;
-        width: 98vw;
-        margin-left: 0;
-        margin-right: 0;
-        padding: 0 1vw;
-      }
-      .hero-txt-block {
-        justify-content: center;
-        align-items: flex-end;
-        padding-top: 3vw;
-        padding-bottom: 2vw;
-      }
-      .hero-txt-block h1 {
-        font-size: 2rem;
-        padding-left: 16px;
-      }
-      .hero-img-full {
-        justify-content: center;
-        margin-top: 2vw;
-        margin-bottom: 0;
-        min-width: 220px;
-      }
-      .hero-img-full img {
-        width: 98vw;
-        max-width: 480px;
-        min-height: 160px;
-        height: 200px;
-        border-radius: 0 0 18px 18px;
-      }
-      .about-row {
-        flex-direction: column;
-        align-items: center;
-      }
-      .about-img {
-        justify-content: center;
-        margin-top: 2vw;
-        margin-bottom: 0;
-      }
-      .about-img img {
-        width: 98vw;
-        max-width: 320px;
-        height: 180px;
-        border-radius: 10px 10px 0 0;
-      }
-      .about-info {
-        border-radius: 0 0 10px 10px;
-        margin: 0 0 2vw 0;
-        max-width: 98vw;
-        min-width: 220px;
-        width: 98vw;
-        padding: 1.2rem 2vw 1.2rem 2vw;
-      }
-    }
-    @media (max-width: 600px) {
-      .logo { font-size: 1.1rem; letter-spacing: 1px;}
-      header { padding: 0 8px; height: 48px;}
-      nav { gap: 1.2rem;}
-      .hero-section, .about-row { margin-top: 8px; margin-bottom: 8px;}
-      .hero-txt-block h1 { font-size: 1.15rem; border-left-width: 2.5px; padding-left: 8px;}
-      .video-section { margin-top: 2vw; }
-      .video-container { width: 99vw; }
-      .footer-company, .footer-info { text-align: left; }
+
+    .custom-list li::before {
+      content: "•";              /* agregamos un bullet */
+      color: #2db0e2;            /* azul a juego */
+      position: absolute;
+      left: -1.2rem;
+      font-weight: bold;
     }
   </style>
+
 </head>
 <body>
   {% if registro_key %}
@@ -477,146 +242,211 @@
     });
   </script>
   {% endif %}
-  <header>
-    <div class="logo">DIMSOR</div>
-    <nav>
-      <a href="javascript:void(0);" onclick="mostrarFormularioKey()">KEY</a>     
-      <a href="#">DESCARGAR APP</a>
-      <button class="toggle-theme-btn" onclick="toggleTheme()" aria-label="Cambiar modo">
-        <i class="fa-solid fa-moon"></i>
+    <nav class="navbar navbar-expand-lg sticky-top bg-white">
+    <div class="container">
+      <a class="navbar-brand fw-bold text-uppercase" href="#" style="color:var(--brand-blue-700); letter-spacing:.6px;">DIMSOR</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
       </button>
-    </nav>
-  </header>
-  <main>
-    <section class="hero-section">
-      <div class="hero-txt-block">
-        <h1>
-          "ESCUCHAMOS,<br>COMPRENDEMOS Y<br>ACOMPAÑAMOS"
-        </h1>
-      </div>
-      <div class="hero-img-full">
-        <img src="https://res.cloudinary.com/dxuk9bogw/image/upload/v1754330648/image_1_fpekno.png" alt="Robot Amigo">
-      </div>
-    </section>
-    <a href="#about-row" class="scroll-down-arrow" aria-label="Ir a la siguiente sección"><span>&#8595;</span></a>
-    <section class="about-row" id="about-row">
-      <div class="about-img">
-        <img src="https://res.cloudinary.com/dxuk9bogw/image/upload/v1754330639/image_3_s51p0p.png" alt="Equipo DIMSOR">
-      </div>
-      <div class="about-info">
-        <h2>SOBRE NOSOTROS</h2>
-        <p>
-          JUAN DOMINID MUÑOZ ESLAVA<br>
-          ARANDA GARRIDO, RENZO JOSÉ<br>
-          BENAVIDES SOTO, MIGUEL ÁNGEL<br>
-          TRUYENQUE PERALES, SINTIA JULISSA
-        </p>
-        <a class="contact-btn" href="https://wa.me/51903032047" target="_blank" rel="noopener">
-          CONTACTANOS <span class="wa-icon"><i class="fab fa-whatsapp"></i></span>
-        </a>
-      </div>
-    </section>
-    <section class="video-section">
-      <div class="video-container">
-        <video controls poster="./assets/video_poster.jpg" width="100%" height="100%">
-          <source src="./assets/demo_robot.mp4" type="video/mp4">
-          Tu navegador no soporta video HTML5.
-        </video>
-      </div>
-      <label>VIDEO DEMOSTRATIVO DEL ROBOT</label>
-    </section>
-  </main>
-  <footer>
-    <div class="footer-info">
-      <p><i class="fas fa-map-marker-alt"></i> Calle Los Olivos 123, Urb. Santa Clara, Santiago De Surco, Lima, Perú</p>
-      <p><i class="fas fa-phone"></i> +51 903 032 047</p>
-      <p><i class="fas fa-envelope"></i> <a href="mailto:SolveGrades@gmail.com">SolveGrades@gmail.com</a></p>
-      <div class="footer-icons">
-        <a href="https://facebook.com" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-        <a href="https://twitter.com" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
-        <a href="https://linkedin.com" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-        <a href="https://github.com" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+
+      <div class="collapse navbar-collapse justify-content-end" id="mainNav">
+        <ul class="navbar-nav align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="#home">HOME</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">KEY</a></li>
+          <li class="nav-item"><a class="nav-link" href="#download">DESCARGAR APP</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">CONTACTANOS</a></li>
+        </ul>
       </div>
     </div>
-    <div class="footer-company">
-      <p>SOBRE LA COMPAÑÍA</p>
-      <p>
-        © 2025 SolveGrades – Especialistas en diseño y desarrollo de páginas web personalizadas. Impulsamos tu presencia digital con soluciones a medida.
-      </p>
+  </nav>
+  
+  <!-- ===== HERO ===== -->
+  <header id="home" class="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+
+    <div class="container position-relative">
+      <div class="row align-items-center">
+        <!-- Texto -->
+        <div class="col-lg-6 pt-4 pt-lg-0">
+          <h1 class="title mb-3">DIMSOR</h1>
+
+          <p class="lead">
+            Tu compañero de apoyo emocional siempre a tu lado.
+         
+            Escucha, comprende y te acompaña en cada momento difícil.
+     
+            Con su diseño amigable y funciones interactivas, transforma la soledad en compañía.
+          </p>
+
+          <div class="d-flex gap-3 align-items-center mt-4">
+            <a href="#about" class="btn btn-more btn-lg">MAS INFORMACION</a>
+          </div>
+        </div>
+
+        <!-- Robot: imagen externa + sombra -->
+        <div class="col-lg-6">
+          <div class="robot-wrap">
+            <div class="robot-shadow"></div>
+            <img
+              src="https://res.cloudinary.com/dhuzpc1eh/image/upload/v1756701210/dimsor2.0_ecb1zx.png"
+              alt="Chat Bot"
+              class="img-fluid robot-img"
+              loading="eager"
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== SECCIONES (PLACEHOLDER) ===== -->
+  <section id="about" class="section">
+  <div class="container">
+    <div class="row align-items-center g-4">
+      <!-- Texto -->
+      <div class="col-md-6">
+        <h3 class="section-title">SOBRE NOSOTROS</h3>
+        <p class="muted">
+          <span class="bullet"></span>Construimos asistentes de apoyo emocion modernos para potenciar
+          la experiencia de tus usuarios.
+        </p>
+        <p class="muted">
+          <span class="bullet"></span>Integración con múltiples canales, flujos visuales y análisis.
+        </p>
+        <p class="muted">
+          <span class="bullet"></span>Somos un grupo desarrollador compuesto por:
+          <ul class="custom-list">
+            <li>Diseñadores UI/UX - TRUYENQUE PERALES,SINTIA JULISSA</li>
+            <li>Desarrolladores Frontend y Backend - MUÑOZ ESLAVA, JUAN DOMINID</li>
+            <li>Especialistas en Inteligencia Artificial - ARANDA GARRIDO, RENZO JOSE</li>
+            <li>Gestores de Proyectos - BENAVIDES SOTO, MIGUEL ANGEL</li>
+          </ul>
+        </p>
+
+
+
+      </div>
+
+      <!-- Imagen -->
+      <div class="col-md-6 text-center">
+        <img 
+          src="https://res.cloudinary.com/dhuzpc1eh/image/upload/v1756779940/f235401f-ff25-4c05-b884-d75793e5f233.png" 
+          alt="Nuestra Misión" 
+          class="img-fluid rounded-4 shadow-sm mission-img">
+      </div>
+    </div>
+  </div>
+</section>
+
+  <section id="download" class="section bg-white">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-6">
+          <h3 class="section-title">DESCARGA APP</h3>
+          <p class="muted">
+            Descarga la APP en tu movil para tener a <strong>DIMSOR</strong> en tus manos.
+          </p>
+          <div class="d-flex flex-wrap gap-3 mt-3">
+            <a href="#" class="btn btn-more">Descargar .zip</a>
+            <a href="#" class="btn btn-outline-primary fw-bold" style="border-width:2px;">Ver guía</a>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="ratio ratio-16x9 rounded-4 border" style="border-color:#e6eef8; background:linear-gradient(180deg,#f7fbff, #eef6ff);">
+            <div class="d-flex align-items-center justify-content-center">
+              <span class="text-muted">Preview / Video aquí</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-5">
+          <h3 class="section-title">CONTACTANOS</h3>
+          <p class="muted">¿Tienes dudas? Escríbenos y te responderemos pronto.</p>
+        </div>
+        <div class="col-lg-7">
+          <form class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Nombre</label>
+              <input type="text" class="form-control form-control-lg" placeholder="Tu nombre" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control form-control-lg" placeholder="tucorreo@dominio.com" required>
+            </div>
+            <div class="col-12">
+              <label class="form-label">Mensaje</label>
+              <textarea class="form-control form-control-lg" rows="4" placeholder="Cuéntanos en qué te ayudamos"></textarea>
+            </div>
+            <div class="col-12">
+              <button type="submit" class="btn btn-more">Enviar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+      <div>© <span id="y"></span> SolveGrades – Especialistas en diseño y desarrollo de páginas web modernas, funcionales y personalizadas. Impulsamos tu presencia digital con soluciones a medida.</div>
+      <div class="small">
+        <a href="#home" class="text-decoration-none" style="color:var(--brand-blue-700)">Subir ↑</a>
+      </div>
     </div>
   </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
   <script>
-    // Mostrar formulario SweetAlert2 para completar registro
-    function mostrarFormularioKey() {
-      Swal.fire({
-        title: 'Completar Registro',
-        html:
-          '<input id="swal-key" class="swal2-input" placeholder="Código de registro">' +
-          '<input id="swal-email" class="swal2-input" placeholder="Correo electrónico">' +
-          '<input id="swal-pass" type="password" class="swal2-input" placeholder="Contraseña">',
-        showCancelButton: true,
-        confirmButtonText: 'Registrar',
-        cancelButtonText: 'Cancelar',
-        focusConfirm: false,
-        preConfirm: () => {
-          const key = document.getElementById('swal-key').value.trim();
-          const email = document.getElementById('swal-email').value.trim();
-          const pass = document.getElementById('swal-pass').value;
-          if (!key || !email || !pass) {
-            Swal.showValidationMessage('Completa todos los campos');
-            return false;
-          }
-          return { key, email, pass };
-        }
-      }).then((result) => {
-        if (result.isConfirmed && result.value) {
-          // Usa la URL completa de tu backend FastAPI:
-          fetch('http://localhost:8001/api/usuarios/completar/', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              registro_key: result.value.key,
-              email: result.value.email,
-              password: result.value.pass
-            })
-          })
-          .then(resp => resp.json())
-          .then(data => {
-            // MODIFICADO: éxito si hay id y email en la respuesta
-            if (data && data.id && data.email) {
-              Swal.fire('¡Listo!', 'Registro completado correctamente.', 'success');
-            } else {
-              Swal.fire('Error', data.detail || 'No se pudo completar el registro', 'error');
+    // Año dinámico en el footer
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // Scroll suave para anchors
+    document.querySelectorAll('a.nav-link, a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', function(e){
+        const href = this.getAttribute('href');
+        if(href && href.startsWith('#') && href.length>1){
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if(target){
+            const y = target.getBoundingClientRect().top + window.scrollY - 70;
+            window.scrollTo({ top:y, behavior:'smooth' });
+            // Cerrar el menú móvil si está abierto
+            const nav = document.getElementById('mainNav');
+            if(nav.classList.contains('show')){
+              const bsCollapse = bootstrap.Collapse.getOrCreateInstance('#mainNav');
+              bsCollapse.hide();
             }
-          })
-          .catch(() => {
-            Swal.fire('Error', 'No se pudo conectar con el servidor', 'error');
-          });
+          }
         }
       });
-    }
-    // Modo claro/oscuro con persistencia y cambio de ícono
-    function setThemeIcon() {
-      const btn = document.querySelector('.toggle-theme-btn i');
-      if(document.body.classList.contains('dark-mode')) {
-        btn.classList.remove('fa-moon');
-        btn.classList.add('fa-sun');
-      } else {
-        btn.classList.remove('fa-sun');
-        btn.classList.add('fa-moon');
-      }
-    }
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-      document.body.classList.add('dark-mode');
-    }
-    setThemeIcon();
-    function toggleTheme() {
-      document.body.classList.toggle('dark-mode');
-      const isDark = document.body.classList.contains('dark-mode');
-      localStorage.setItem('theme', isDark ? 'dark' : 'light');
-      setThemeIcon();
-    }
+    });
+
+    // Activar 'active' en el navbar según el scroll
+    const sections = ['#home','#about','#download','#contact'].map(id=>document.querySelector(id));
+    const navLinks = Array.from(document.querySelectorAll('.navbar .nav-link'));
+
+    const setActive = () =>{
+      let current = '#home';
+      const offset = 120;
+      sections.forEach(sec=>{
+        if(!sec) return;
+        const top = sec.offsetTop - offset;
+        if(window.scrollY >= top) current = '#'+sec.id;
+      });
+      navLinks.forEach(l=>{
+        l.classList.toggle('active', l.getAttribute('href')===current);
+      });
+    };
+    window.addEventListener('scroll', setActive, { passive:true });
+    window.addEventListener('load', setActive);
   </script>
 </body>
 </html>
