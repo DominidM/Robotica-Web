@@ -227,6 +227,7 @@
 
 </head>
 <body>
+  <!-- Flotante KEY si existe registro_key -->
   {% if registro_key %}
   <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -242,17 +243,17 @@
     });
   </script>
   {% endif %}
-    <nav class="navbar navbar-expand-lg sticky-top bg-white">
+  <nav class="navbar navbar-expand-lg sticky-top bg-white">
     <div class="container">
-      <a class="navbar-brand fw-bold text-uppercase" href="#" style="color:var(--brand-blue-700); letter-spacing:.6px;">DIMSOR</a>
+      <a class="navbar-brand fw-bold text-uppercase" href="#home" style="color:var(--brand-blue-700); letter-spacing:.6px;">DIMSOR</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-
       <div class="collapse navbar-collapse justify-content-end" id="mainNav">
         <ul class="navbar-nav align-items-lg-center">
           <li class="nav-item"><a class="nav-link" href="#home">HOME</a></li>
-          <li class="nav-item"><a class="nav-link" href="#about">KEY</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">NOSOTROS</a></li>
+          <li class="nav-item"><a class="nav-link" href="javascript:void(0);" onclick="mostrarFormularioKey()">KEY</a></li>
           <li class="nav-item"><a class="nav-link" href="#download">DESCARGAR APP</a></li>
           <li class="nav-item"><a class="nav-link" href="#contact">CONTACTANOS</a></li>
         </ul>
@@ -263,89 +264,62 @@
   <!-- ===== HERO ===== -->
   <header id="home" class="hero">
     <div class="hero-bg" aria-hidden="true"></div>
-
     <div class="container position-relative">
       <div class="row align-items-center">
-        <!-- Texto -->
         <div class="col-lg-6 pt-4 pt-lg-0">
           <h1 class="title mb-3">DIMSOR - BOT</h1>
-
           <p class="lead">
-            Tu compañero de apoyo emocional siempre a tu lado.
-         
-            Escucha, comprende y te acompaña en cada momento difícil.
-     
+            Tu compañero de apoyo emocional siempre a tu lado.<br>
+            Escucha, comprende y te acompaña en cada momento difícil.<br>
             Con su diseño amigable y funciones interactivas, transforma la soledad en compañía.
           </p>
-
           <div class="d-flex gap-3 align-items-center mt-4">
             <a href="#about" class="btn btn-more btn-lg">MAS INFORMACION</a>
           </div>
         </div>
-
-        <!-- Robot: imagen externa + sombra -->
         <div class="col-lg-6">
           <div class="robot-wrap">
             <div class="robot-shadow"></div>
-            <img
-              src="https://res.cloudinary.com/dhuzpc1eh/image/upload/v1756701210/dimsor2.0_ecb1zx.png"
-              alt="Chat Bot"
-              class="img-fluid robot-img"
-              loading="eager"
-            >
+            <img src="https://res.cloudinary.com/dhuzpc1eh/image/upload/v1756701210/dimsor2.0_ecb1zx.png" alt="Chat Bot" class="img-fluid robot-img" loading="eager">
           </div>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- ===== SECCIONES (PLACEHOLDER) ===== -->
   <section id="about" class="section">
-  <div class="container">
-    <div class="row align-items-center g-4">
-      <!-- Texto -->
-      <div class="col-md-6">
-        <h3 class="section-title">SOBRE NOSOTROS</h3>
-        <p class="muted">
-          <span class="bullet"></span>Construimos asistentes de apoyo emocion modernos para potenciar
-          la experiencia de tus usuarios.
-        </p>
-        <p class="muted">
-          <span class="bullet"></span>Integración con múltiples canales, flujos visuales y análisis.
-        </p>
-        <p class="muted">
-          <span class="bullet"></span>Somos un grupo desarrollador compuesto por:
-          <ul class="custom-list">
-            <li>Diseñadores UI/UX - TRUYENQUE PERALES,SINTIA JULISSA</li>
-            <li>Desarrolladores Frontend y Backend - MUÑOZ ESLAVA, JUAN DOMINID</li>
-            <li>Especialistas en Inteligencia Artificial - ARANDA GARRIDO, RENZO JOSE</li>
-            <li>Gestores de Proyectos - BENAVIDES SOTO, MIGUEL ANGEL</li>
-          </ul>
-        </p>
-
-
-
-      </div>
-
-      <!-- Imagen -->
-      <div class="col-md-6 text-center">
-        <img 
-          src="https://res.cloudinary.com/dhuzpc1eh/image/upload/v1756779940/f235401f-ff25-4c05-b884-d75793e5f233.png" 
-          alt="Nuestra Misión" 
-          class="img-fluid rounded-4 shadow-sm mission-img">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-md-6">
+          <h3 class="section-title">SOBRE NOSOTROS</h3>
+          <p class="muted">
+            <span class="bullet"></span>Construimos asistentes de apoyo emocional modernos para potenciar la experiencia de tus usuarios.
+          </p>
+          <p class="muted">
+            <span class="bullet"></span>Integración con múltiples canales, flujos visuales y análisis.
+          </p>
+          <p class="muted">
+            <span class="bullet"></span>Somos un grupo desarrollador compuesto por:
+            <ul class="custom-list">
+              <li>Diseñadores UI/UX - TRUYENQUE PERALES, SINTIA JULISSA</li>
+              <li>Desarrolladores Frontend y Backend - MUÑOZ ESLAVA, JUAN DOMINID</li>
+              <li>Especialistas en Inteligencia Artificial - ARANDA GARRIDO, RENZO JOSE</li>
+              <li>Gestores de Proyectos - BENAVIDES SOTO, MIGUEL ANGEL</li>
+            </ul>
+          </p>
+        </div>
+        <div class="col-md-6 text-center">
+          <img src="https://res.cloudinary.com/dhuzpc1eh/image/upload/v1756779940/f235401f-ff25-4c05-b884-d75793e5f233.png" alt="Nuestra Misión" class="img-fluid rounded-4 shadow-sm mission-img">
+        </div>
       </div>
     </div>
-  </div>
-</section>
-
+  </section>
   <section id="download" class="section bg-white">
     <div class="container">
       <div class="row align-items-center g-4">
         <div class="col-lg-6">
           <h3 class="section-title">DESCARGA APP</h3>
-          <p class="muted">
-            Descarga la APP en tu movil para tener a <strong>DIMSOR</strong> en tus manos.
-          </p>
+          <p class="muted">Descarga la APP en tu móvil para tener a <strong>DIMSOR</strong> en tus manos.</p>
           <div class="d-flex flex-wrap gap-3 mt-3">
             <a href="#" class="btn btn-more">Descargar .zip</a>
             <a href="#" class="btn btn-outline-primary fw-bold" style="border-width:2px;">Ver guía</a>
@@ -361,7 +335,6 @@
       </div>
     </div>
   </section>
-
   <section id="contact" class="section">
     <div class="container">
       <div class="row g-4">
@@ -391,7 +364,6 @@
       </div>
     </div>
   </section>
-
   <footer class="site-footer">
     <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
       <div>© <span id="y"></span> SolveGrades – Especialistas en diseño y desarrollo de páginas web modernas, funcionales y personalizadas. Impulsamos tu presencia digital con soluciones a medida.</div>
@@ -400,15 +372,12 @@
       </div>
     </div>
   </footer>
-
-  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
   <script>
     // Año dinámico en el footer
     document.getElementById('y').textContent = new Date().getFullYear();
 
-    // Scroll suave para anchors
+    // Scroll suave para anchors y navbar
     document.querySelectorAll('a.nav-link, a[href^="#"]').forEach(a=>{
       a.addEventListener('click', function(e){
         const href = this.getAttribute('href');
@@ -418,9 +387,8 @@
           if(target){
             const y = target.getBoundingClientRect().top + window.scrollY - 70;
             window.scrollTo({ top:y, behavior:'smooth' });
-            // Cerrar el menú móvil si está abierto
             const nav = document.getElementById('mainNav');
-            if(nav.classList.contains('show')){
+            if(nav && nav.classList.contains('show')){
               const bsCollapse = bootstrap.Collapse.getOrCreateInstance('#mainNav');
               bsCollapse.hide();
             }
@@ -432,7 +400,6 @@
     // Activar 'active' en el navbar según el scroll
     const sections = ['#home','#about','#download','#contact'].map(id=>document.querySelector(id));
     const navLinks = Array.from(document.querySelectorAll('.navbar .nav-link'));
-
     const setActive = () =>{
       let current = '#home';
       const offset = 120;
@@ -447,6 +414,54 @@
     };
     window.addEventListener('scroll', setActive, { passive:true });
     window.addEventListener('load', setActive);
+
+    // Flotante para registro KEY (funcionalidad con fetch, puede ajustar backend url)
+    function mostrarFormularioKey() {
+      Swal.fire({
+        title: 'Completar Registro',
+        html:
+          '<input id="swal-key" class="swal2-input" placeholder="Código de registro">' +
+          '<input id="swal-email" class="swal2-input" placeholder="Correo electrónico">' +
+          '<input id="swal-pass" type="password" class="swal2-input" placeholder="Contraseña">',
+        showCancelButton: true,
+        confirmButtonText: 'Registrar',
+        cancelButtonText: 'Cancelar',
+        focusConfirm: false,
+        preConfirm: () => {
+          const key = document.getElementById('swal-key').value.trim();
+          const email = document.getElementById('swal-email').value.trim();
+          const pass = document.getElementById('swal-pass').value;
+          if (!key || !email || !pass) {
+            Swal.showValidationMessage('Completa todos los campos');
+            return false;
+          }
+          return { key, email, pass };
+        }
+      }).then((result) => {
+        if (result.isConfirmed && result.value) {
+          fetch('/api/usuarios/completar/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              registro_key: result.value.key,
+              email: result.value.email,
+              password: result.value.pass
+            })
+          })
+          .then(resp => resp.json())
+          .then(data => {
+            if (data.message === 'Registro completado' || (data.id && data.email)) {
+              Swal.fire('¡Listo!', 'Registro completado correctamente.', 'success');
+            } else {
+              Swal.fire('Error', data.detail || 'No se pudo completar el registro', 'error');
+            }
+          })
+          .catch(() => {
+            Swal.fire('Error', 'No se pudo conectar con el servidor', 'error');
+          });
+        }
+      });
+    }
   </script>
 </body>
 </html>
