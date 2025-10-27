@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\ASKINET\Desktop\REPOSITORIES\Robotica-Web\.venv"
+VIRTUAL_ENV="C:\Users\renzi\OneDrive\Documentos\GitHub\Robotica-Web\.venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
