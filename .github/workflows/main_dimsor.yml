@@ -1,7 +1,3 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-# More info on Python, GitHub Actions, and Azure App Service: https://aka.ms/python-webapps-actions
-
 name: Build and deploy Python app to Azure Web App - Dimsor
 
 on:
@@ -10,29 +6,45 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  PYTHON_VERSION: '3.12'
+  APP_NAME: 'Dimsor'
+  SLOT_NAME: 'Production'
+  STARTUP_FILE: '/home/site/wwwroot/startup.sh'
+  PORT: '8000'
+
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read #This is required for actions/checkout
+      contents: read
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python version
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: ${{ env.PYTHON_VERSION }}
 
-      # 🛠️ Local Build Section (Optional)
-      # The following section in your workflow is designed to catch build issues early on the client side, before deployment. This can be helpful for debugging and validation. However, if this step significantly increases deployment time and early detection is not critical for your workflow, you may remove this section to streamline the deployment process.
-      - name: Create and Start virtual environment and Install dependencies
+      - name: Create and activate virtual environment and install dependencies
         run: |
           python -m venv antenv
           source antenv/bin/activate
-          pip install -r requirements.txt
-                
-      # By default, when you enable GitHub CI/CD integration through the Azure portal, the platform automatically sets the SCM_DO_BUILD_DURING_DEPLOYMENT application setting to true. This triggers the use of Oryx, a build engine that handles application compilation and dependency installation (e.g., pip install) directly on the platform during deployment. Hence, we exclude the antenv virtual environment directory from the deployment artifact to reduce the payload size. 
+          pip install --upgrade pip
+          # Instala dependencias necesarias para ejecutar manage.py durante la build
+          # (añade Django, gunicorn, whitenoise y driver de BD si no están en requirements.txt)
+          pip install "Django>=4.2,<5.0" gunicorn whitenoise psycopg2-binary || true
+          pip install -r requirements.txt || true
+
+      - name: Run collectstatic (build)
+        if: always()
+        run: |
+          source antenv/bin/activate
+          # Exporta DJANGO_SETTINGS_MODULE aquí si necesitas usar settings de producción durante la build
+          # export DJANGO_SETTINGS_MODULE="dimsor.settings.production"
+          python manage.py collectstatic --noinput || true
+
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
         with:
@@ -41,25 +53,19 @@ jobs:
             .
             !antenv/
 
-      # 🚫 Opting Out of Oryx Build
-      # If you prefer to disable the Oryx build process during deployment, follow these steps:
-      # 1. Remove the SCM_DO_BUILD_DURING_DEPLOYMENT app setting from your Azure App Service Environment variables.
-      # 2. Refer to sample workflows for alternative deployment strategies: https://github.com/Azure/actions-workflow-samples/tree/master/AppService
-      
-
   deploy:
     runs-on: ubuntu-latest
     needs: build
     permissions:
-      id-token: write #This is required for requesting the JWT
-      contents: read #This is required for actions/checkout
+      id-token: write
+      contents: read
 
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: python-app
-      
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -67,10 +73,28 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_06417CF7738444B7B3B2873CEB47FF89 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_B178C723DAAE48D2A83C19ABE08C4EE1 }}
 
-      - name: 'Deploy to Azure Web App'
+      - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
-          app-name: 'Dimsor'
-          slot-name: 'Production'
-          
+          app-name: ${{ env.APP_NAME }}
+          slot-name: ${{ env.SLOT_NAME }}
+
+      - name: Configure App Service (startup script, port) and restart
+        uses: azure/cli@v1
+        with:
+          inlineScript: |
+            # Guarda el nombre del resource group en el secreto AZURE_RESOURCE_GROUP
+            RG="${{ secrets.AZURE_RESOURCE_GROUP }}"
+            APP="${{ env.APP_NAME }}"
+            STARTUP="${{ env.STARTUP_FILE }}"
+            PORT="${{ env.PORT }}"
+
+            echo "Configurando WEBSITES_PORT=${PORT} y startup file=${STARTUP} en ${APP} (RG=${RG})"
+            az webapp config appsettings set --name "$APP" --resource-group "$RG" --settings WEBSITES_PORT="$PORT"
+            az webapp config set --name "$APP" --resource-group "$RG" --startup-file "$STARTUP"
+            az webapp restart --name "$APP" --resource-group "$RG"
+
+      - name: Show deployment hint
+        run: |
+          echo "Despliegue completado. Revisa Azure Portal > App Services > ${{ env.APP_NAME }} → Log Stream (o Kudu) para ver logs de arranque."
