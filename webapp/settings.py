@@ -12,7 +12,7 @@ if str(BASE_DIR) not in sys.path:
 SECRET_KEY = 'your-secret-key'
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "[::1]"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "[::1]", "dimsor.azurewebsites.net"]  # ⬅️ AGREGAR AZURE
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -28,6 +28,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # ⬅️ AGREGAR WHITENOISE
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -41,8 +42,8 @@ ROOT_URLCONF = 'webapp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "templates"],  # <-- Muy importante: así Django busca en /templates global
-        'APP_DIRS': True,  # Así Django busca también en templates/ de cada app
+        'DIRS': [BASE_DIR / "templates"],
+        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -59,14 +60,13 @@ WSGI_APPLICATION = 'webapp.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'dimsor',             # Nombre de tu base de datos MySQL
-        'USER': 'root',         # Usuario de la base de datos
-        'PASSWORD': 'dominid',  # Contraseña del usuario
-        'HOST': 'localhost',          # O la IP/hostname de tu servidor MySQL
-        'PORT': '3306',               # Puerto, usualmente 3306 para MySQL
+        'NAME': 'dimsor',
+        'USER': 'root',
+        'PASSWORD': 'dominid',
+        'HOST': 'localhost',
+        'PORT': '3306',
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-            # 'charset': 'utf8mb4',   # Puedes descomentar si quieres soporte Unicode completo
         }
     }
 }
@@ -91,7 +91,9 @@ TIME_ZONE = 'America/Lima'
 USE_I18N = True
 USE_TZ = True
 
+# ==================== ARCHIVOS ESTÁTICOS ====================
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # ⬅️ AGREGAR ESTA LÍNEA
 
 # Automatiza la búsqueda de todas las carpetas static en modules/*/*/static
 STATICFILES_DIRS = [
@@ -99,5 +101,6 @@ STATICFILES_DIRS = [
 ]
 for static_dir in glob.glob(str(BASE_DIR / "modules" / "*" / "*" / "static")):
     STATICFILES_DIRS.append(static_dir)
+# ============================================================
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
