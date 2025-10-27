@@ -12,7 +12,13 @@ if str(BASE_DIR) not in sys.path:
 SECRET_KEY = 'your-secret-key'
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "[::1]", "dimsor.azurewebsites.net"]  # ⬅️ AGREGAR AZURE
+ALLOWED_HOSTS = [
+    "localhost", 
+    "127.0.0.1", 
+    "[::1]", 
+    "dimsor.azurewebsites.net",
+    "dimsor-cyhwdmf2c8fec8cm.canadacentral-01.azurewebsites.net" 
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
